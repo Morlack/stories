@@ -3,6 +3,7 @@ package org.craftsmenlabs.stories.spikes;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.*;
 import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
+import org.craftsmenlabs.stories.spikes.scoring.Violation;
 import org.junit.Test;
 import mockit.*;
 
@@ -32,7 +33,7 @@ public class StoryValidatorTest
 	@Test
 	public void testRankingWorks(@Injectable List<ValidatorEntry> list, @Injectable Iterator iterator) throws Exception
 	{
-		ValidatorEntry validatorEntry = new ValidatorEntry("", 1, 100, null);
+		ValidatorEntry validatorEntry = new ValidatorEntry("", 1, 100, null, new ArrayList<Violation>());
 
 		List<ValidatorEntry> testEntries = Arrays.asList(validatorEntry);
 

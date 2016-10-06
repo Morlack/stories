@@ -3,6 +3,7 @@ package org.craftsmenlabs.stories.spikes.convertor;
 import java.util.ArrayList;
 import java.util.List;
 import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
+import org.craftsmenlabs.stories.spikes.scoring.Violation;
 
 public class StringToEntryConverter
 {
@@ -18,6 +19,6 @@ public class StringToEntryConverter
 
 	public ValidatorEntry parseFromString(String data, int position)
 	{
-		return new ValidatorEntry(data, position, 0, null);
+		return new ValidatorEntry(data, position, 0, null, new ArrayList<Violation>());
 	}
 }

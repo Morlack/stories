@@ -1,6 +1,8 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import java.util.ArrayList;
+import java.util.List;
 import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
 import org.junit.Test;
 import mockit.*;
@@ -29,10 +31,13 @@ public class StoryScorerTest
 	@Test
 	public void testPerformScorer_ReturnsZeroOnEmpty(@Injectable ValidatorEntry entry) throws Exception
 	{
+		List<Violation> v = new ArrayList<>();
 		new Expectations()
 		{{
 			entry.getSourceTextDescription();
 			result = "";
+			entry.getViolations();
+			result = v;
 		}};
 
 		float score = storyScorer.performScorer(entry);

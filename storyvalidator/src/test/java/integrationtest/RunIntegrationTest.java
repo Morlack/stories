@@ -14,6 +14,6 @@ public class RunIntegrationTest
 	public void testName() throws Exception
 	{
 		float ranking = storyValidator.retrieveRanking(testDataGenerator.getTestDataFromResource());
-		assertThat(ranking).isEqualTo(0.775f);
+		assertThat(ranking).isEqualTo(0.825f);
 	}
 }
