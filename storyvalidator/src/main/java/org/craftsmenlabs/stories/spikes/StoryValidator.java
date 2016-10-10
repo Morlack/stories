@@ -1,15 +1,20 @@
 package org.craftsmenlabs.stories.spikes;
 
-import java.util.List;
 import org.craftsmenlabs.stories.spikes.convertor.StringToEntryConverter;
 import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
 import org.craftsmenlabs.stories.spikes.scoring.StoryScorer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class StoryValidator
 {
 
-	StoryScorer regexScorer = new StoryScorer();
-	StringToEntryConverter entryConverter = new StringToEntryConverter();
+	private final Logger logger = LoggerFactory.getLogger(StoryValidator.class);
+
+	private StoryScorer regexScorer = new StoryScorer();
+	private StringToEntryConverter entryConverter = new StringToEntryConverter();
 
 	public float retrieveRanking(List<String> testData)
 	{
@@ -23,7 +28,6 @@ public class StoryValidator
 		listEntries(entries);
 
 		return createRanking(entries);
-
 	}
 
 	protected float createRanking(List<ValidatorEntry> entries)
@@ -42,7 +46,7 @@ public class StoryValidator
 	{
 		for (int i = 0; i < entries.size(); i++)
 		{
-			System.out.println("N: " + (i + 1) + " points:" + entries.get(i).getPointsValuation() + "\t\t" + entries.get(i)
+			logger.info("N: " + (i + 1) + " points:" + entries.get(i).getPointsValuation() + "\t\t" + entries.get(i)
 				.getSourceTextDescription());
 		}
 	}
