@@ -22,6 +22,33 @@ public class App
 			+ "As a marketing manager \n"
 			+ "I would like to be informed about the total amount of alarms in my userbase\n"
 		));
+		testItems.add(new String(""
+				+ "As a super office user \n"
+				+ "I would like to be informed about the alarms in my user \n"
+				+ "so I can have the most preferred alarm on top. \n"
+		));
+		testItems.add(new String(""
+				+ "As a marketing manager \n"
+				+ "I would like to be informed about the total amount of alarms in my userbase\n"
+		));
+		testItems.add(new String(""
+				+ "As a super office user \n"
+				+ "I would like to be informed about the alarms in my user \n"
+				+ "so I can have the most preferred alarm on top. \n"
+		));
+		testItems.add(new String(""
+				+ "As a marketing manager \n"
+				+ "I would like to be informed about the total amount of alarms in my userbase\n"
+		));
+		testItems.add(new String(""
+				+ "As a super office user \n"
+				+ "I would like to be informed about the alarms in my user \n"
+				+ "so I can have the most preferred alarm on top. \n"
+		));
+		testItems.add(new String(""
+				+ "As a marketing manager \n"
+				+ "I would like to be informed about the total amount of alarms in my userbase\n"
+		));
 		StoryValidator storyValidator = new StoryValidator();
 
 		float ranking = storyValidator.retrieveRanking(testItems);
