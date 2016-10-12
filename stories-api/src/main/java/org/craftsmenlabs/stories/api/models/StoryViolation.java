@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories.spikes.scoring;
+package org.craftsmenlabs.stories.api.models;
 
 import lombok.Value;
 

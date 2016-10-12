@@ -9,6 +9,7 @@
 		<module>storyvalidator</module>
 		<module>isolator</module>
 		<module>plugin-filereader</module>
+		<module>stories-api</module>
 	</modules>
 	<packaging>pom</packaging>
 

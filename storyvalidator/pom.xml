@@ -7,7 +7,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>storyparser</artifactId>
+	<artifactId>storyvalidator</artifactId>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -19,11 +19,11 @@
 
 
 	<dependencies>
-		<!--NLP -->
+		<!--internal -->
 		<dependency>
-			<groupId>org.apache.opennlp</groupId>
-			<artifactId>opennlp-tools</artifactId>
-			<version>${nlp.version}</version>
+			<groupId>org.craftsmenlabs.stories.spikes</groupId>
+			<artifactId>stories-api</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
