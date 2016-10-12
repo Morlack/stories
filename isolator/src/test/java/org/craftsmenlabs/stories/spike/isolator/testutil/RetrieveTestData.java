@@ -1,17 +1,22 @@
 package org.craftsmenlabs.stories.spike.isolator.testutil;
 
+import org.craftsmenlabs.stories.spike.isolator.model.AcceptanceCriteria;
+import org.craftsmenlabs.stories.spike.isolator.model.Issue;
 import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
-import org.junit.Test;
+import org.craftsmenlabs.stories.spike.isolator.model.Userstory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RetrieveTestData
 {
 
-	public static List<String> getTestDataFromResource(String resourceName)
+	public static List<JiraIssueDTO> getTestDataFromResource(String resourceName)
 	{
-		List<String> testItems = new ArrayList<>();
-		testItems.add(""
+		List<JiraIssueDTO> testItems = new ArrayList<>();
+		testItems.add(
+				JiraIssueDTO.builder().description(
+				""
 			+ "As a super office user \n"
 			+ "I would like to be informed about the alarms in my user \n"
 			+ "so I can have the most preferred alarm on top. \n"
@@ -23,47 +28,41 @@ public class RetrieveTestData
 			+ "\n"
 			+ "*Scope* \n"
 			+ "* Add weight (eg 0) when profile settings is not used in a alarm "
-		);
+		).build());
 
-		testItems.add(""
-			+ "As a marketing manager \n"
+		testItems.add(
+			JiraIssueDTO.builder().description(
+			   "As a marketing manager \n"
 			+ "I would like to be informed about the total amount of alarms in my userbase\n"
 			+ "so I can keep track of. \n"
 			+ "\n"
 			+ "*Acceptance criteria* \n"
 			+ "Given I am on the backend page\n"
 			+ "When I select gather statistics\n"
-			+ "Then the system displays a pages with the alarms\n"
+			+ "Then the system displays a pages with the alarms.\n"
 			+ "\n"
 			+ "*Scope* \n"
 			+ "* Use rest services for everything"
-		);
+		).build());
 		return testItems;
 	}
 
-	public static List<List<String>> getTestResultFromResource() {
-		List<List<String>> testItems = new ArrayList<>();
+	public static List<Issue> getTestResultFromResource() {
+		List<Issue> testItems = new ArrayList<>();
 
-		List<String> sentence1 = new ArrayList<>();
-
-		sentence1.add(
+		Issue issue = Issue.builder().
+				userstory(new Userstory(
 				"As a super office user \n"
 				+ "I would like to be informed about the alarms in my user \n"
 				+ "so I can have the most preferred alarm on top."
-		);
-		sentence1.add(
+		)).acceptanceCriteria(new AcceptanceCriteria(
 				  "*Acceptance criteria* \n"
 				+ "Given I select an alarm \n"
 				+ "When a profile (or profiles) contain an \n"
 				+ "Then the system displays a page with the alarm."
-		);
-		sentence1.add(
-				 "*Scope* \n"
-				+ "* Add weight (eg 0) when profile settings is not used in a alarm "
-		);
+		)).build();
 
-
-		testItems.add(sentence1);
+		testItems.add(issue);
 		return testItems;
 	}
 
@@ -77,7 +76,7 @@ public class RetrieveTestData
 				"*Acceptance criteria*\n" +
 				"Given I select an alarm\n" +
 				"When a profile (or profiles) contain an\n" +
-				"Then the system displays a page with the alarm\n" +
+				"Then the system displays a page with the alarm.\n" +
 				"\n" +
 				"*Scope*\n" +
 				"* Add weight (eg 0) when profile settings is not used in a alarm\n" +
@@ -88,7 +87,7 @@ public class RetrieveTestData
 				"*Acceptance criteria*\n" +
 				"Given I am on the backend page\n" +
 				"When I select gather statistics\n" +
-				"Then the system displays a pages with the alarms\n" +
+				"Then the system displays a pages with the alarms.\n" +
 				"\n" +
 				"*Scope*\n" +
 				"* Use rest services for everything\"\";;100%;100%;300;0;;;n/a;6.1.0build01;;;Sprint 1;Service;0|zgbujw:;9,22E+18;;;2;\n" +
@@ -99,14 +98,14 @@ public class RetrieveTestData
 		return JiraIssueDTO.builder()
 				.key("Gareth-2001")
 				.description(
-				"\"As a super office user\n" +
+				"As a super office user\n" +
 				"I would like to be informed about the alarms in my user\n" +
 				"so I can have the most preferred alarm on top.\n" +
 				"\n" +
 				"*Acceptance criteria*\n" +
 				"Given I select an alarm\n" +
 				"When a profile (or profiles) contain an\n" +
-				"Then the system displays a page with the alarm\n" +
+				"Then the system displays a page with the alarm.\n" +
 				"\n" +
 				"*Scope*\n" +
 				"* Add weight (eg 0) when profile settings is not used in a alarm\n" +
@@ -120,7 +119,24 @@ public class RetrieveTestData
 				"Then the system displays a pages with the alarms\n" +
 				"\n" +
 				"*Scope*\n" +
-				"* Use rest services for everything\"\"")
+				"* Use rest services for everything")
+				.build();
+	}
+
+
+	public static Issue getTestIssueFromResource(){
+		return Issue.builder()
+				.userstory(new Userstory(
+					"As a super office user\n" +
+					"I would like to be informed about the alarms in my user\n" +
+					"so I can have the most preferred alarm on top."
+				))
+				.acceptanceCriteria(new AcceptanceCriteria(
+					"*Acceptance criteria*\n" +
+					"Given I select an alarm\n" +
+					"When a profile (or profiles) contain an\n" +
+					"Then the system displays a page with the alarm."
+				))
 				.build();
 	}
 }

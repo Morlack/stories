@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class Userstory {
     private String description;
 }

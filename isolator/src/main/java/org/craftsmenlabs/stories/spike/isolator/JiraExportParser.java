@@ -2,7 +2,8 @@ package org.craftsmenlabs.stories.spike.isolator;
 
 import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -33,13 +34,27 @@ public class JiraExportParser {
         List<JiraIssueDTO> jiraIssues = new ArrayList<>(items.size()/HEADER.length);
 
         for (int i = 0; i < items.size(); i+=HEADER.length) {
+            String description = removeOuterQuotes(items.get(i + DESCRIPTION_INDEX));
+
+
             jiraIssues.add(
                     JiraIssueDTO.builder()
                             .key(items.get(i + KEY_INDEX))
-                            .description(items.get(i + DESCRIPTION_INDEX))
+                            .description(description)
                             .build());
         }
 
         return jiraIssues;
+    }
+
+    private static String removeOuterQuotes(String input){
+        if(input.startsWith("\"")){
+            input = input.substring(1);
+        }
+        if(input.endsWith("\"")){
+            input = input.substring(0, input.length()-2);
+        }
+
+        return input;
     }
 }
