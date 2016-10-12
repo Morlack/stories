@@ -18,6 +18,7 @@ public class SentenceSplitter {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("en-sent.bin").getFile());
 
+
         try {
             modelIn = new FileInputStream(file);
             SentenceModel model = new SentenceModel(modelIn);
