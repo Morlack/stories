@@ -8,19 +8,24 @@ public class App {
     private final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
+        App application = new App();
+        application.startApplication(args);
+    }
+
+    public void startApplication(String[] args) {
+        logger.info("Starting story filereader plugin.");
         CommandlineParameters parameters = new CommandlineParameters();
         new JCommander(parameters, args);
         print(parameters);
 
-        //go go gadget do something with this
-        PluginExecutor pluginExecutor = new PluginExecutor(parameters);
+        PluginExecutor pluginExecutor = new PluginExecutor();
         pluginExecutor.execute(parameters);
 
-
+        logger.info("Finished story filereader plugin.");
     }
 
-    public static void print(CommandlineParameters commandlineParameters) {
-        System.out.println("Path:" + commandlineParameters.getStoryFilePath());
-        System.out.println("Delimiter:" + commandlineParameters.getDelimter());
+    public void print(CommandlineParameters commandlineParameters) {
+        logger.info("Path to file containing Jira export: " + commandlineParameters.getStoryFilePath());
+        logger.info("Delimiter: " + commandlineParameters.getDelimter());
     }
 }
