@@ -13,7 +13,7 @@ public class App {
     }
 
     public void startApplication(String[] args) {
-        logger.info("Starting story filereader plugin.");
+        logger.info("Starting stories plugin.");
         CommandlineParameters parameters = new CommandlineParameters();
         new JCommander(parameters, args);
         print(parameters);
@@ -21,11 +21,10 @@ public class App {
         PluginExecutor pluginExecutor = new PluginExecutor();
         pluginExecutor.execute(parameters);
 
-        logger.info("Finished story filereader plugin.");
+        logger.info("Finished stories plugin.");
     }
 
     public void print(CommandlineParameters commandlineParameters) {
-        logger.info("Path to file containing Jira export: " + commandlineParameters.getStoryFilePath());
-        logger.info("Delimiter: " + commandlineParameters.getDelimter());
+        logger.info("Path to file containing Jira export: " + commandlineParameters.getStoryFilePath() +" with delimiter: "+commandlineParameters.getDelimter());
     }
 }

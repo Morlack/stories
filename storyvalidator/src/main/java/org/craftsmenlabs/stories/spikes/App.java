@@ -1,5 +1,6 @@
 package org.craftsmenlabs.stories.spikes;
 
+import org.craftsmenlabs.stories.spikes.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,5 +54,8 @@ public class App
 
 		float ranking = 0f;//storyValidator.retrieveRanking(testItems);
 		System.out.println("Ranking:" + (ranking * 100) + "%");
+
+		Configuration configuration = new Configuration();
+
 	}
 }

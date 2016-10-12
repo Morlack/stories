@@ -36,7 +36,7 @@ public class CurvedRankingTest {
             }
         };
         float ranking = curvedRanking.createRanking(list);
-        assertThat(ranking).isEqualTo(10.0f);
+        assertThat(ranking).isEqualTo(0.1f);
     }
 
     @Test
