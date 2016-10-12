@@ -2,6 +2,7 @@ package org.craftsmenlabs.stories.spikes;
 
 import org.craftsmenlabs.stories.spikes.convertor.StringToEntryConverter;
 import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
+import org.craftsmenlabs.stories.spikes.ranking.LinearRanking;
 import org.craftsmenlabs.stories.spikes.scoring.StoryScorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ public class StoryValidator
 
 	private StoryScorer regexScorer = new StoryScorer();
 	private StringToEntryConverter entryConverter = new StringToEntryConverter();
+	private LinearRanking linearRanking = new LinearRanking();
 
 	public float retrieveRanking(List<String> testData)
 	{
@@ -27,19 +29,7 @@ public class StoryValidator
 		}
 		listEntries(entries);
 
-		return createRanking(entries);
-	}
-
-	protected float createRanking(List<ValidatorEntry> entries)
-	{
-		int maxNumber = (entries.size() * (entries.size() + 1)) / 2;
-
-		float scoredPoints = 0f;
-		for (ValidatorEntry v : entries)
-		{
-			scoredPoints += v.getPointsValuation();
-		}
-		return scoredPoints / maxNumber;
+		return linearRanking.createRanking(entries);
 	}
 
 	private void listEntries(List<ValidatorEntry> entries)
