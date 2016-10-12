@@ -116,7 +116,7 @@ public class RetrieveTestData
 				"*Acceptance criteria*\n" +
 				"Given I am on the backend page\n" +
 				"When I select gather statistics\n" +
-				"Then the system displays a pages with the alarms\n" +
+				"Then the system displays a pages with the alarms.\n" +
 				"\n" +
 				"*Scope*\n" +
 				"* Use rest services for everything")

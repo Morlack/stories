@@ -17,10 +17,12 @@ public class JiraExportParser {
     private static final int DESCRIPTION_INDEX = 28;
 
     public static String readFileAsString(String filename) throws IOException {
-        ClassLoader classLoader = JiraExportParser.class.getClassLoader();
-        File file = new File(classLoader.getResource(filename).getFile());
+//        ClassLoader classLoader = JiraExportParser.class.getClassLoader();
+//        File file = new File(classLoader.getResource(filename).getFile());
+        File file = new File(filename);
 
         return Files.lines(Paths.get(file.toURI())).reduce("", (s, s2) -> s.concat(s2.concat("\n")));
+
     }
 
     public static List<JiraIssueDTO> getIssues(String input){

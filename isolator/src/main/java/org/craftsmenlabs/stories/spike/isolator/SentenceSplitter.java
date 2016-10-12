@@ -28,7 +28,8 @@ public class SentenceSplitter
     {
         InputStream modelIn = null;
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(SENTENCEMODEL).getFile());
+//        File file = new File(classLoader.getResource(SENTENCEMODEL).getFile());
+        File file = new File(SENTENCEMODEL);
 
         try
         {

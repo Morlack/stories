@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Issue {
+    private String rank;
     private Userstory userstory;
     private AcceptanceCriteria acceptanceCriteria;
 }
