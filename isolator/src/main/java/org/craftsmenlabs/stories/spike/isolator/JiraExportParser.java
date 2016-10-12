@@ -1,0 +1,45 @@
+package org.craftsmenlabs.stories.spike.isolator;
+
+import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class JiraExportParser {
+
+    private static final String[] HEADER = {"Project", "Key", "Summary", "Issue Type", "Status", "Priority", "Resolution", "Assignee", "Reporter", "Creator", "Created", "Last Viewed", "Updated", "Resolved", "Affects Version/s", "Fix Version/s", "Component/s", "Due Date", "Votes", "Watchers", "Images", "Original Estimate", "Remaining Estimate", "Time Spent", "Work Ratio", "Sub-Tasks", "Linked Issues", "Environment", "Description", "Security Level", "Progress", "_ Progress", "_ Time Spent", "_ Remaining Estimate", "_ Original Estimate", "Labels", "Release Notes", "Fixed in build", "Tested version", "Severity", "Sprint", "Epic Link", "Rank", "Rank (Obsolete)", "Flagged", "Epic/Theme", "Story Points", "Business Value"};
+    private static final int KEY_INDEX = 1;
+    private static final int DESCRIPTION_INDEX = 28;
+
+    public static String readFileAsString(String filename) throws IOException {
+        ClassLoader classLoader = JiraExportParser.class.getClassLoader();
+        File file = new File(classLoader.getResource(filename).getFile());
+
+        return Files.lines(Paths.get(file.toURI())).reduce("", (s, s2) -> s.concat(s2.concat("\n")));
+    }
+
+    public static List<JiraIssueDTO> getIssues(String input){
+        List<String> lines = Arrays.asList(input.split("\n"));
+
+        //drop header and footer
+        input = String.join("\n", lines.subList(1, lines.size()-1 ));
+
+        List<String> items = Arrays.asList(input.split(";"));
+
+        List<JiraIssueDTO> jiraIssues = new ArrayList<>(items.size()/HEADER.length);
+
+        for (int i = 0; i < items.size(); i+=HEADER.length) {
+            jiraIssues.add(
+                    JiraIssueDTO.builder()
+                            .key(items.get(i + KEY_INDEX))
+                            .description(items.get(i + DESCRIPTION_INDEX))
+                            .build());
+        }
+
+        return jiraIssues;
+    }
+}
