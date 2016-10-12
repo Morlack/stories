@@ -1,6 +1,6 @@
 package org.craftsmenlabs.stories.spike.isolator;
 
-import org.craftsmenlabs.stories.spike.isolator.model.Issue;
+import org.craftsmenlabs.stories.api.models.Issue;
 import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
 import org.craftsmenlabs.stories.spike.isolator.testutil.RetrieveTestData;
 import org.junit.Test;

@@ -4,8 +4,8 @@ package org.craftsmenlabs.stories.spikes.ranking;
 import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Tested;
-import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
-import org.craftsmenlabs.stories.spikes.scoring.Violation;
+import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import org.craftsmenlabs.stories.api.models.Violation;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class CurvedRankingTest {
 
     @Test
     public void testRankingWorks(@Injectable List<ValidatorEntry> list, @Injectable Iterator iterator) throws Exception {
-        ValidatorEntry validatorEntry = new ValidatorEntry("", 1, 100, null, new ArrayList<Violation>());
+        ValidatorEntry validatorEntry = new ValidatorEntry(null, 1, new ArrayList<Violation>());
         List<ValidatorEntry> testEntries = Arrays.asList(validatorEntry);
 
         new Expectations() {

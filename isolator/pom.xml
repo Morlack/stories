@@ -67,6 +67,11 @@
 			<version>3.4.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.craftsmenlabs.stories.spikes</groupId>
+			<artifactId>stories-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

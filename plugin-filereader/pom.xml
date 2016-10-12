@@ -18,7 +18,7 @@
         <!--internal components -->
         <dependency>
             <groupId>org.craftsmenlabs.stories.spikes</groupId>
-            <artifactId>storyparser</artifactId>
+            <artifactId>storyvalidator</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -26,6 +26,8 @@
             <artifactId>isolator</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+
 
         <dependency>
             <groupId>com.beust</groupId>

@@ -1,11 +1,14 @@
 package org.craftsmenlabs.stories.spikes.testutil;
 
+import org.craftsmenlabs.stories.api.models.Issue;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RetrieveStoryTestData
 {
-	public List<String> getTestDataFromResource()
+	public List<Issue> getTestDataFromResource()
 	{
 
 		List<String> testItems = new ArrayList<>();
@@ -78,6 +81,6 @@ public class RetrieveStoryTestData
 			+ "Insert namesst preferred alarm on top. \n"
 		));
 
-		return testItems;
+		return testItems.stream().map(s -> Issue.builder().userstory(s).build()).collect(Collectors.toList());
 	}
 }

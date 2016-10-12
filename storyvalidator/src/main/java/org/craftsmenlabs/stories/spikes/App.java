@@ -51,7 +51,7 @@ public class App
 		));
 		StoryValidator storyValidator = new StoryValidator();
 
-		float ranking = storyValidator.retrieveRanking(testItems);
+		float ranking = 0f;//storyValidator.retrieveRanking(testItems);
 		System.out.println("Ranking:" + (ranking * 100) + "%");
 	}
 }

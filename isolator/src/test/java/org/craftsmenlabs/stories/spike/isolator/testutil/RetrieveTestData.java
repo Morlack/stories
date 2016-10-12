@@ -1,9 +1,7 @@
 package org.craftsmenlabs.stories.spike.isolator.testutil;
 
-import org.craftsmenlabs.stories.spike.isolator.model.AcceptanceCriteria;
-import org.craftsmenlabs.stories.spike.isolator.model.Issue;
+import org.craftsmenlabs.stories.api.models.Issue;
 import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
-import org.craftsmenlabs.stories.spike.isolator.model.Userstory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,16 +49,17 @@ public class RetrieveTestData
 		List<Issue> testItems = new ArrayList<>();
 
 		Issue issue = Issue.builder().
-				userstory(new Userstory(
+				userstory(
 				"As a super office user \n"
 				+ "I would like to be informed about the alarms in my user \n"
 				+ "so I can have the most preferred alarm on top."
-		)).acceptanceCriteria(new AcceptanceCriteria(
+		)
+		.acceptanceCriteria(
 				  "*Acceptance criteria* \n"
 				+ "Given I select an alarm \n"
 				+ "When a profile (or profiles) contain an \n"
 				+ "Then the system displays a page with the alarm."
-		)).build();
+		).build();
 
 		testItems.add(issue);
 		return testItems;
@@ -120,23 +119,25 @@ public class RetrieveTestData
 				"\n" +
 				"*Scope*\n" +
 				"* Use rest services for everything")
+				.rank("0|zgbujw:")
 				.build();
 	}
 
 
 	public static Issue getTestIssueFromResource(){
 		return Issue.builder()
-				.userstory(new Userstory(
+				.userstory(
 					"As a super office user\n" +
 					"I would like to be informed about the alarms in my user\n" +
 					"so I can have the most preferred alarm on top."
-				))
-				.acceptanceCriteria(new AcceptanceCriteria(
+				)
+				.acceptanceCriteria(
 					"*Acceptance criteria*\n" +
 					"Given I select an alarm\n" +
 					"When a profile (or profiles) contain an\n" +
 					"Then the system displays a page with the alarm."
-				))
+				)
+				.rank("0|zgbujw:")
 				.build();
 	}
 }

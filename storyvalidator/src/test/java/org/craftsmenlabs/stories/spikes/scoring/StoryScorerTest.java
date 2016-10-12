@@ -3,7 +3,8 @@ package org.craftsmenlabs.stories.spikes.scoring;
 import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Tested;
-import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
+import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import org.craftsmenlabs.stories.api.models.Violation;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class StoryScorerTest {
     @Test
     public void testPerformScorer(@Injectable ValidatorEntry entry) throws Exception {
         new Expectations() {{
-            entry.getSourceTextDescription();
+            entry.getIssue().getUserstory();
             result = "As a super office user \n"
                     + "I would like to be informed about the alarms in my user \\n\"\n"
                     + "so I can have the most preferred alarm on top.";
@@ -33,7 +34,7 @@ public class StoryScorerTest {
     public void testPerformScorer_ReturnsZeroOnEmpty(@Injectable ValidatorEntry entry) throws Exception {
         List<Violation> v = new ArrayList<>();
         new Expectations() {{
-            entry.getSourceTextDescription();
+            entry.getIssue().getUserstory();
             result = "";
             entry.getViolations();
             result = v;
@@ -46,7 +47,7 @@ public class StoryScorerTest {
     @Test
     public void testPerformScorer_ReturnsNullOnEmpty(@Injectable ValidatorEntry entry) throws Exception {
         new Expectations() {{
-            entry.getSourceTextDescription();
+            entry.getIssue().getUserstory();
             result = null;
         }};
 

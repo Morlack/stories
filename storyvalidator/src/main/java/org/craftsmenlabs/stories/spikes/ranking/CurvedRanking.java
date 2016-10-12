@@ -1,6 +1,8 @@
 package org.craftsmenlabs.stories.spikes.ranking;
 
-import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
+
+
+import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 
 import java.util.List;
 

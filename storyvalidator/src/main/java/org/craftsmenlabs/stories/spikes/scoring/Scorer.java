@@ -1,6 +1,7 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
-import org.craftsmenlabs.stories.spikes.model.ValidatorEntry;
+
+import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 
 public interface Scorer
 {

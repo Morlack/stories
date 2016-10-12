@@ -1,9 +1,10 @@
 package integrationtest;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.craftsmenlabs.stories.spikes.StoryValidator;
 import org.craftsmenlabs.stories.spikes.testutil.RetrieveStoryTestData;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RunIntegrationTest
 {
