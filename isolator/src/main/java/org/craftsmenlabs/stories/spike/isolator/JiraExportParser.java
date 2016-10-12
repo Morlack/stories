@@ -2,7 +2,8 @@ package org.craftsmenlabs.stories.spike.isolator;
 
 import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,10 +17,12 @@ public class JiraExportParser {
     private static final int DESCRIPTION_INDEX = 28;
 
     public static String readFileAsString(String filename) throws IOException {
-        ClassLoader classLoader = JiraExportParser.class.getClassLoader();
-        File file = new File(classLoader.getResource(filename).getFile());
+//        ClassLoader classLoader = JiraExportParser.class.getClassLoader();
+//        File file = new File(classLoader.getResource(filename).getFile());
+        File file = new File(filename);
 
         return Files.lines(Paths.get(file.toURI())).reduce("", (s, s2) -> s.concat(s2.concat("\n")));
+
     }
 
     public static List<JiraIssueDTO> getIssues(String input){
@@ -33,13 +36,27 @@ public class JiraExportParser {
         List<JiraIssueDTO> jiraIssues = new ArrayList<>(items.size()/HEADER.length);
 
         for (int i = 0; i < items.size(); i+=HEADER.length) {
+            String description = removeOuterQuotes(items.get(i + DESCRIPTION_INDEX));
+
+
             jiraIssues.add(
                     JiraIssueDTO.builder()
                             .key(items.get(i + KEY_INDEX))
-                            .description(items.get(i + DESCRIPTION_INDEX))
+                            .description(description)
                             .build());
         }
 
         return jiraIssues;
+    }
+
+    private static String removeOuterQuotes(String input){
+        if(input.startsWith("\"")){
+            input = input.substring(1);
+        }
+        if(input.endsWith("\"")){
+            input = input.substring(0, input.length()-2);
+        }
+
+        return input;
     }
 }

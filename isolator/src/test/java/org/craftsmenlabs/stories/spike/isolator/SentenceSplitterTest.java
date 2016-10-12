@@ -1,20 +1,21 @@
 package org.craftsmenlabs.stories.spike.isolator;
 
+import org.craftsmenlabs.stories.spike.isolator.model.Issue;
+import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
 import org.craftsmenlabs.stories.spike.isolator.testutil.RetrieveTestData;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
 public class SentenceSplitterTest {
 
-    List<String> testData = RetrieveTestData.getTestDataFromResource(null);
-    List<List<String>> testResult = RetrieveTestData.getTestResultFromResource();
+    List<JiraIssueDTO> testData = RetrieveTestData.getTestDataFromResource(null);
+    List<Issue> testResult = RetrieveTestData.getTestResultFromResource();
 
     @Test
     public void SentenceSplitterTest() {
-        assertEquals(new SentenceSplitter().detectSentence(testData.get(0)).get().collect(Collectors.toList()), testResult.get(0));
+        assertEquals(new SentenceSplitter().splitSentence(testData.get(0)), testResult.get(0));
     }
 }

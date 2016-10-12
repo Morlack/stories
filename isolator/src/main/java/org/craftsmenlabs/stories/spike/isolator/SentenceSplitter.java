@@ -2,41 +2,76 @@ package org.craftsmenlabs.stories.spike.isolator;
 
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
+import org.craftsmenlabs.stories.spike.isolator.model.AcceptanceCriteria;
+import org.craftsmenlabs.stories.spike.isolator.model.Issue;
+import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
+import org.craftsmenlabs.stories.spike.isolator.model.Userstory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Stream;
 
-public class SentenceSplitter {
+/**
+ * The Isolator can map a string to a card
+ */
+public class SentenceSplitter
+{
+    private final String SENTENCEMODEL = "en-sent.bin";
+    private SentenceDetectorME sentenceDetector;
 
-    public Optional<Stream<String>> detectSentence(String input) {
+    public SentenceSplitter() {
+        loadSentenceDetector();
+    }
+
+    public void loadSentenceDetector()
+    {
         InputStream modelIn = null;
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("en-sent.bin").getFile());
+//        File file = new File(classLoader.getResource(SENTENCEMODEL).getFile());
+        File file = new File(SENTENCEMODEL);
 
-
-        try {
+        try
+        {
             modelIn = new FileInputStream(file);
             SentenceModel model = new SentenceModel(modelIn);
-            SentenceDetectorME sentenceDetector = new SentenceDetectorME(model);
+            sentenceDetector = new SentenceDetectorME(model);
 
-            return Optional.of(Arrays.stream(sentenceDetector.sentDetect(input)));
-
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
-        } finally {
-            if (modelIn != null) {
-                try {
+        }
+        finally
+        {
+            if (modelIn != null)
+            {
+                try
+                {
                     modelIn.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     e.printStackTrace();
                 }
             }
         }
-        return Optional.empty();
+    }
+
+    public Issue splitSentence(JiraIssueDTO input)
+    {
+        final String[] sentences = sentenceDetector.sentDetect(input.getDescription());
+
+        //currently:
+        // - first sentence => user story
+        // - second sentence => acceptance criteria
+        // by convention
+        final String userstory = sentences[0];
+        final String acceptanceCriteria = sentences[1];
+
+        return Issue.builder()
+                .userstory(new Userstory(userstory))
+                .acceptanceCriteria(new AcceptanceCriteria(acceptanceCriteria))
+                .build();
     }
 }

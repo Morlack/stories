@@ -1,12 +1,12 @@
 package org.craftsmenlabs.stories.spike.isolator.model;
 
-
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@Builder
 public class Issue {
+    private String rank;
     private Userstory userstory;
     private AcceptanceCriteria acceptanceCriteria;
 }
