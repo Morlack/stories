@@ -2,7 +2,8 @@ package org.craftsmenlabs.stories.spikes;
 
 import org.craftsmenlabs.stories.api.models.Issue;
 import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.spikes.ranking.LinearRanking;
+import org.craftsmenlabs.stories.spikes.ranking.BinaryRanking;
+import org.craftsmenlabs.stories.spikes.ranking.Ranking;
 import org.craftsmenlabs.stories.spikes.scoring.StoryScorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ public class StoryValidator
 
 	private final Logger logger = LoggerFactory.getLogger(StoryValidator.class);
 	private StoryScorer regexScorer = new StoryScorer();
-    private LinearRanking linearRanking = new LinearRanking();
+    private Ranking ranking = new BinaryRanking();
 
 	public List<ValidatorEntry> convertToValidatorEntries(List<Issue> issues){
 		List<ValidatorEntry> entries = issues.stream()
@@ -32,7 +33,7 @@ public class StoryValidator
 	}
 
 	public float rankStories(List<ValidatorEntry> entries){
-		return linearRanking.createRanking(entries);
+		return ranking.createRanking(entries);
 	}
 
 	private void applyScoring(List<ValidatorEntry> entries)

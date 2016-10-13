@@ -46,7 +46,6 @@ public class AcceptanceCriteriaScorer implements Scorer{
 
         }
 
-        validatorEntry.setPointsValuation((int) (points * 100));
         return points;
 
     }

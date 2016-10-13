@@ -6,7 +6,7 @@ import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 
 import java.util.List;
 
-public class CurvedRanking {
+public class CurvedRanking implements Ranking {
 
     public static final int SMOOTH_CURVE = 2;
 
