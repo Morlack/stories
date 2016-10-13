@@ -3,46 +3,50 @@ package org.craftsmenlabs.stories.spikes.scoring;
 
 import org.craftsmenlabs.stories.api.models.StoryViolation;
 import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.ViolationType;
 
+import java.util.List;
+
 public class StoryScorer implements Scorer {
+
+    @Override
     public float performScorer(ValidatorEntry validatorEntry) {
+        String userstory = validatorEntry.getIssue().getUserstory().toLowerCase();
+        List<Violation> violations = validatorEntry.getViolations();
+
         float points = 0f;
 
         if (validatorEntry == null) {
             return points;
         }
-        if (validatorEntry.getIssue().getUserstory() == null) {
+        if (userstory == null) {
             return points;
         }
-        if (validatorEntry.getIssue().getUserstory().length() > 20) {
+        if (userstory.length() > 20) {
             points += 0.1f;
         } else {
-            validatorEntry.getViolations()
-                    .add(new StoryViolation(ViolationType.StoryMultipleLinesClauseViolation, "Story should contain multiple lines."));
+            violations.add(new StoryViolation(ViolationType.StoryMultipleLinesClauseViolation, "Story should contain multiple lines."));
         }
-        if (validatorEntry.getIssue().getUserstory().length() > 20) {
+        if (userstory.length() > 20) {
             points += 0.1f;
         } else {
-            validatorEntry.getViolations().add(new StoryViolation(ViolationType.StoryLengthClauseViolation, "Story is to short."));
+            violations.add(new StoryViolation(ViolationType.StoryLengthClauseViolation, "Story is to short."));
         }
-        if (validatorEntry.getIssue().getUserstory().toLowerCase().contains("as a")) {
+        if (userstory.contains("as a")) {
             points += 0.2f;
         } else {
-            validatorEntry.getViolations()
-                    .add(new StoryViolation(ViolationType.StoryAsIsClauseViolation, "<As a> is section is described properly."));
+            violations.add(new StoryViolation(ViolationType.StoryAsIsClauseViolation, "<As a> section is not described properly."));
         }
-        if (validatorEntry.getIssue().getUserstory().toLowerCase().contains("\ni")) {
+        if (userstory.contains("\ni")) {
             points += 0.2f;
         } else {
-            validatorEntry.getViolations()
-                    .add(new StoryViolation(ViolationType.StoryIClauseViolation, "<(new-line)I> section is described properly."));
+            violations.add(new StoryViolation(ViolationType.StoryIClauseViolation, "<(new-line)I> section is not described properly."));
         }
-        if (validatorEntry.getIssue().getUserstory().toLowerCase().contains("\nso")) {
+        if (userstory.contains("\nso")) {
             points += 0.4f;
         } else {
-            validatorEntry.getViolations()
-                    .add(new StoryViolation(ViolationType.StorySoClauseViolation, "<(new-line)So I> section is described properly."));
+            violations.add(new StoryViolation(ViolationType.StorySoClauseViolation, "<(new-line)So I> section is not described properly."));
         }
         return points;
     }

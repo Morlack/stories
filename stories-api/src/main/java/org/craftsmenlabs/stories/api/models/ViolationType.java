@@ -6,5 +6,8 @@ public enum ViolationType
 	StoryLengthClauseViolation,
 	StoryAsIsClauseViolation,
 	StoryIClauseViolation,
-	StorySoClauseViolation
+	StorySoClauseViolation,
+	CriteriaGivenClauseViolation,
+	CriteriaWhenClauseViolation,
+	CriteriaThenClauseViolation
 }
