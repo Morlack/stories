@@ -23,7 +23,6 @@ public class JiraExportParser {
         File file = new File(filename);
 
         return Files.lines(Paths.get(file.toURI())).reduce("", (s, s2) -> s.concat(s2.concat("\n")));
-
     }
 
     public static List<JiraIssueDTO> getIssues(String input){
@@ -38,14 +37,16 @@ public class JiraExportParser {
 
         for (int i = 0; i < items.size(); i+=HEADER.length) {
             String description = removeOuterQuotes(items.get(i + DESCRIPTION_INDEX));
-
-
             jiraIssues.add(
                     JiraIssueDTO.builder()
                             .key(items.get(i + KEY_INDEX))
                             .rank(items.get(i + RANK_INDEX))
                             .description(description)
                             .build());
+
+            // the string is only split on ";" , and now it misses the \n after an issue.
+            // this compensates for that error.
+            i--;
         }
 
         return jiraIssues;

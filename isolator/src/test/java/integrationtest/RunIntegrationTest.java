@@ -21,8 +21,10 @@ public class RunIntegrationTest {
         List<JiraIssueDTO> jiraIssues = JiraExportParser.getIssues(testData);
 
         SentenceSplitter sentenceSplitter = new SentenceSplitter();
-        Issue issue = sentenceSplitter.splitSentence(jiraIssues.get(0));
+        Issue issue1 = sentenceSplitter.splitSentence(jiraIssues.get(0));
+        Issue issue2 = sentenceSplitter.splitSentence(jiraIssues.get(1));
 
-        assertEquals(testResult, issue);
+        assertEquals(testResult, issue1);
+        assertEquals(testResult, issue2);
     }
 }
