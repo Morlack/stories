@@ -1,11 +1,7 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
-import org.craftsmenlabs.stories.api.models.CriteriaViolation;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.api.models.Violation;
-import org.craftsmenlabs.stories.api.models.ViolationType;
-
 import java.util.List;
+import org.craftsmenlabs.stories.api.models.*;
 
 /**
  * Assigns points to acceptance criteria, based on the
@@ -16,10 +12,13 @@ public class AcceptanceCriteriaScorer implements Scorer{
     @Override
     public float performScorer(ValidatorEntry validatorEntry) {
         String criteria = validatorEntry.getIssue().getAcceptanceCriteria();
+        //TODO: add to lower case?
+        //String criteria = validatorEntry.getIssue().getAcceptanceCriteria().toLowerCase();
         List<Violation> violations = validatorEntry.getViolations();
         float points = 0f;
 
         if(criteria == null){
+
             return points;
         }else{
             criteria = criteria.toLowerCase();

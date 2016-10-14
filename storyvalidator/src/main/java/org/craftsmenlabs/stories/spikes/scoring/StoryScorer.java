@@ -1,12 +1,7 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
-
-import org.craftsmenlabs.stories.api.models.StoryViolation;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.api.models.Violation;
-import org.craftsmenlabs.stories.api.models.ViolationType;
-
 import java.util.List;
+import org.craftsmenlabs.stories.api.models.*;
 
 public class StoryScorer implements Scorer {
 
@@ -15,18 +10,20 @@ public class StoryScorer implements Scorer {
         String userstory = validatorEntry.getIssue().getUserstory().toLowerCase();
         List<Violation> violations = validatorEntry.getViolations();
 
-        float points = 0f;
+        float points = 0.0f;
 
-        if (validatorEntry == null) {
-            return points;
+        if (validatorEntry == null)
+        {//|| validatorEntry.getIssue()==null || validatorEntry.getIssue().getUserstory()==null) {
+            violations.add(new StoryViolation(ViolationType.StoryEmptyViolation, "This story is empty."));
         }
-        if (userstory == null) {
-            return points;
-        }
-        if (userstory.length() > 20) {
+        if (userstory.contains("\n"))
+        {
             points += 0.1f;
-        } else {
-            violations.add(new StoryViolation(ViolationType.StoryMultipleLinesClauseViolation, "Story should contain multiple lines."));
+        }
+        else
+        {
+            violations
+                .add(new StoryViolation(ViolationType.StoryMultipleLinesClauseViolation, "Story should contain multiple lines."));
         }
         if (userstory.length() > 20) {
             points += 0.1f;

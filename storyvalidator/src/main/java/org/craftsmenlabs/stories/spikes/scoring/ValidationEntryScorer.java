@@ -16,6 +16,6 @@ public class ValidationEntryScorer implements Scorer{
         AcceptanceCriteriaScorer acceptanceCriteriaScorer = new AcceptanceCriteriaScorer();
         float acScore = acceptanceCriteriaScorer.performScorer(validatorEntry);
 
-        return storyScore * acScore;
+        return storyScore + acScore / 2;
     }
 }

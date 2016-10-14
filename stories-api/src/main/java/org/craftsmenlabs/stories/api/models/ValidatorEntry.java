@@ -1,16 +1,13 @@
 package org.craftsmenlabs.stories.api.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-
 import java.util.List;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @Builder
 public class ValidatorEntry {
     private Issue issue;
-    private int pointsValuation = 0;
+    private float pointsValuation = 0.0f;
     private List<Violation> violations;
 }

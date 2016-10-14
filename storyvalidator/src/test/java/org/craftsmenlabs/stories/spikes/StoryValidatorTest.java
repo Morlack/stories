@@ -1,40 +1,73 @@
 package org.craftsmenlabs.stories.spikes;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.craftsmenlabs.stories.api.models.Issue;
 import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.spikes.testutil.RetrieveStoryTestData;
+import org.craftsmenlabs.stories.spikes.ranking.BinaryRanking;
+import org.craftsmenlabs.stories.spikes.ranking.LinearRanking;
 import org.junit.Test;
-import mockit.Tested;
+import mockit.*;
 
 public class StoryValidatorTest
 {
-	List<String> roles = Arrays.asList("As a tester \n I", "As a developer", "As a developer");
-	List<Issue> testData = roles.stream()
-		.map(s -> Issue.builder().userstory(s).build())
-		.collect(Collectors.toList());
 
+	@Injectable
+	BinaryRanking ranking;
 	@Tested
 	StoryValidator storyValidator;
 
+	TestDataGenerator testDataGenerator = new TestDataGenerator();
+
 	@Test
-	public void retrieveRankingTest() throws Exception
+	public void convertToValidatorEntriesAreAllConvertedTest() throws Exception
 	{
-		List<ValidatorEntry> validatorEntries = storyValidator.convertToValidatorEntries(testData);
+		List<ValidatorEntry> validatorEntries = storyValidator.convertToValidatorEntries(testDataGenerator.getIssues());
 		assertThat(validatorEntries.size()).isEqualTo(3);
 	}
 
-	@Test
-	public void testStoryValidatorOnRealData() throws Exception
+	@Test(expected = IllegalArgumentException.class)
+	public void convertToValidatorEntriesHandlesNullt() throws Exception
 	{
-		RetrieveStoryTestData testDataGenerator = new RetrieveStoryTestData();
-		StoryValidator storyValidator = new StoryValidator();
+		storyValidator.convertToValidatorEntries(null);
+	}
 
-		float ranking = storyValidator.rankStories(storyValidator.convertToValidatorEntries(testDataGenerator.getTestDataFromResource()));
-		assertThat(ranking).isEqualTo(0.825f);
+	@Test
+	public void testScoringForStories() throws Exception
+	{
+		List<ValidatorEntry> entries = testDataGenerator.getMixedValidatorItems(3);
+		storyValidator.scoreStories(entries);
+
+		assertThat(entries.get(0).getViolations().size()).isEqualTo(0);
+		assertThat(entries.get(0).getPointsValuation()).isEqualTo(1.0f);
+		assertThat(entries.get(1).getViolations().size()).isEqualTo(1);
+		assertThat(entries.get(1).getPointsValuation()).isEqualTo(0.6f);
+		assertThat(entries.get(2).getViolations().size()).isEqualTo(4);
+		assertThat(entries.get(2).getPointsValuation()).isEqualTo(0.2f);
+	}
+
+	@Test()
+	public void rankStories(@Mocked List<ValidatorEntry> entries) throws Exception
+	{
+		new Expectations()
+		{{
+			entries.size();
+			result = 10;
+		}};
+		assertThat(storyValidator.rankStories(entries)).isEqualTo(0.0f);
 
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void rankStoriesReturnsExceptionOnNull(@Injectable LinearRanking ranking) throws Exception
+	{
+		storyValidator.rankStories(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void rankStoriesReturnsExceptionOnEmpty(@Injectable LinearRanking ranking) throws Exception
+	{
+		storyValidator.rankStories(Collections.emptyList());
+	}
+
 }
