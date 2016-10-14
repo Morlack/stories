@@ -1,12 +1,12 @@
 package org.craftsmenlabs.stories.spike.isolator;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import org.craftsmenlabs.stories.api.models.Issue;
-import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
+import org.craftsmenlabs.stories.api.models.Issue;
+import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * The Isolator can map a string to a card
@@ -52,7 +52,7 @@ public class SentenceSplitter
 		}
 	}
 
-	public Issue splitSentence(JiraIssueDTO input)
+	public Issue splitSentence(JiraCSVIssueDTO input)
 	{
 		final String[] sentences = sentenceDetector.sentDetect(input.getDescription());
 

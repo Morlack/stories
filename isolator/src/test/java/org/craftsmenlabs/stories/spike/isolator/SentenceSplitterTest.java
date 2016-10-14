@@ -1,18 +1,20 @@
 package org.craftsmenlabs.stories.spike.isolator;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import java.util.List;
-import org.craftsmenlabs.stories.api.models.Issue;
-import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
-import org.craftsmenlabs.stories.spike.isolator.testutil.RetrieveTestData;
-import org.junit.Test;
-import mockit.*;
+import mockit.Expectations;
+import mockit.Injectable;
+import mockit.Mocked;
+import mockit.Tested;
 import opennlp.tools.sentdetect.SentenceDetectorME;
+import org.craftsmenlabs.stories.api.models.Issue;
+import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SentenceSplitterTest{
 
-	@Injectable JiraIssueDTO input;
+	@Injectable
+    JiraCSVIssueDTO input;
 
 	@Mocked SentenceDetectorME sentenceDetector;
 

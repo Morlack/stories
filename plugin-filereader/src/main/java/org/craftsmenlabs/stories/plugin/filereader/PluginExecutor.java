@@ -4,7 +4,7 @@ import org.craftsmenlabs.stories.api.models.Issue;
 import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 import org.craftsmenlabs.stories.spike.isolator.JiraExportParser;
 import org.craftsmenlabs.stories.spike.isolator.SentenceSplitter;
-import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
+import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
 import org.craftsmenlabs.stories.spikes.StoryValidator;
 import org.craftsmenlabs.stories.spikes.reporting.ValidateorConsoleReporter;
 import org.slf4j.Logger;
@@ -41,11 +41,11 @@ public class PluginExecutor {
             e.printStackTrace();
             return null;
         }
-        List<JiraIssueDTO> jiraIssueDTOs = JiraExportParser.getIssues(input);
+        List<JiraCSVIssueDTO> jiraCSVIssueDTOs = JiraExportParser.getIssues(input);
 
         SentenceSplitter sentenceSplitter = new SentenceSplitter();
 
-        return jiraIssueDTOs.stream()
+        return jiraCSVIssueDTOs.stream()
                 .map(jiraIssueDTO -> sentenceSplitter.splitSentence(jiraIssueDTO))
                 .collect(Collectors.toList());
     }

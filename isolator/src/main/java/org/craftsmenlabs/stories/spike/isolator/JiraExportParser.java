@@ -1,6 +1,6 @@
 package org.craftsmenlabs.stories.spike.isolator;
 
-import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
+import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class JiraExportParser {
 
-    private static final String[] HEADER = {"Project", "Key", "Summary", "Issue Type", "Status", "Priority", "Resolution", "Assignee", "Reporter", "Creator", "Created", "Last Viewed", "Updated", "Resolved", "Affects Version/s", "Fix Version/s", "Component/s", "Due Date", "Votes", "Watchers", "Images", "Original Estimate", "Remaining Estimate", "Time Spent", "Work Ratio", "Sub-Tasks", "Linked Issues", "Environment", "Description", "Security Level", "Progress", "_ Progress", "_ Time Spent", "_ Remaining Estimate", "_ Original Estimate", "Labels", "Release Notes", "Fixed in build", "Tested version", "Severity", "Sprint", "Epic Link", "Rank", "Rank (Obsolete)", "Flagged", "Epic/Theme", "Story Points", "Business Value"};
+    private static final String[] HEADER = {"Project", "Key", "Summary", "JiraJsonIssue Type", "Status", "Priority", "Resolution", "Assignee", "Reporter", "Creator", "Created", "Last Viewed", "Updated", "Resolved", "Affects Version/s", "Fix Version/s", "Component/s", "Due Date", "Votes", "Watchers", "Images", "Original Estimate", "Remaining Estimate", "Time Spent", "Work Ratio", "Sub-Tasks", "Linked Issues", "Environment", "Description", "Security Level", "Progress", "_ Progress", "_ Time Spent", "_ Remaining Estimate", "_ Original Estimate", "Labels", "Release Notes", "Fixed in build", "Tested version", "Severity", "Sprint", "Epic Link", "Rank", "Rank (Obsolete)", "Flagged", "Epic/Theme", "Story Points", "Business Value"};
     private static final int KEY_INDEX = 1;
     private static final int DESCRIPTION_INDEX = 28;
     private static final int RANK_INDEX = 42;
@@ -25,7 +25,7 @@ public class JiraExportParser {
         return Files.lines(Paths.get(file.toURI())).reduce("", (s, s2) -> s.concat(s2.concat("\n")));
     }
 
-    public static List<JiraIssueDTO> getIssues(String input){
+    public static List<JiraCSVIssueDTO> getIssues(String input){
         List<String> lines = Arrays.asList(input.split("\n"));
 
         //drop header and footer
@@ -33,12 +33,12 @@ public class JiraExportParser {
 
         List<String> items = Arrays.asList(input.split(";"));
 
-        List<JiraIssueDTO> jiraIssues = new ArrayList<>(items.size()/HEADER.length);
+        List<JiraCSVIssueDTO> jiraIssues = new ArrayList<>(items.size()/HEADER.length);
 
         for (int i = 0; i < items.size(); i+=HEADER.length) {
             String description = removeOuterQuotes(items.get(i + DESCRIPTION_INDEX));
             jiraIssues.add(
-                    JiraIssueDTO.builder()
+                    JiraCSVIssueDTO.builder()
                             .key(items.get(i + KEY_INDEX))
                             .rank(items.get(i + RANK_INDEX))
                             .description(description)

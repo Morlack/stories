@@ -3,7 +3,7 @@ package integrationtest;
 import org.craftsmenlabs.stories.api.models.Issue;
 import org.craftsmenlabs.stories.spike.isolator.JiraExportParser;
 import org.craftsmenlabs.stories.spike.isolator.SentenceSplitter;
-import org.craftsmenlabs.stories.spike.isolator.model.JiraIssueDTO;
+import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
 import org.craftsmenlabs.stories.spike.isolator.testutil.RetrieveTestData;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class RunIntegrationTest {
         String testData = RetrieveTestData.getExportedTestDataFromResource();
         Issue testResult = RetrieveTestData.getTestIssueFromResource();
 
-        List<JiraIssueDTO> jiraIssues = JiraExportParser.getIssues(testData);
+        List<JiraCSVIssueDTO> jiraIssues = JiraExportParser.getIssues(testData);
 
         SentenceSplitter sentenceSplitter = new SentenceSplitter();
         Issue issue1 = sentenceSplitter.splitSentence(jiraIssues.get(0));
