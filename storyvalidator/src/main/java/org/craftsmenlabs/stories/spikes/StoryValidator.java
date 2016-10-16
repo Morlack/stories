@@ -3,10 +3,10 @@ package org.craftsmenlabs.stories.spikes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.craftsmenlabs.stories.api.models.Issue;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.spikes.ranking.BinaryRanking;
+import org.craftsmenlabs.stories.api.models.*;
+import org.craftsmenlabs.stories.spikes.ranking.CurvedRanking;
 import org.craftsmenlabs.stories.spikes.ranking.Ranking;
+import org.craftsmenlabs.stories.spikes.rating.RatingExecutor;
 import org.craftsmenlabs.stories.spikes.scoring.StoryScorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,8 @@ public class StoryValidator
 
 	private final Logger logger = LoggerFactory.getLogger(StoryValidator.class);
 	private StoryScorer storyScorer = new StoryScorer();
-	private Ranking ranking = new BinaryRanking();
+	private Ranking ranking = new CurvedRanking();
+	private RatingExecutor ratingExecutor = new RatingExecutor();
 
 	public List<ValidatorEntry> convertToValidatorEntries(List<Issue> issues)
 	{
@@ -53,4 +54,8 @@ public class StoryValidator
 		return ranking.createRanking(entries);
 	}
 
+	public Rating rateRanking(float ranking)
+	{
+		return ratingExecutor.retrieveRating(ranking);
+	}
 }
