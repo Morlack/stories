@@ -1,42 +1,38 @@
 package org.craftsmenlabs.stories.spikes.ranking;
 
-import mockit.Expectations;
-import mockit.Injectable;
-import mockit.Tested;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.api.models.Violation;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import java.util.List;
+import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import org.craftsmenlabs.stories.spikes.StoryValidator;
+import org.craftsmenlabs.stories.spikes.TestDataGenerator;
+import org.junit.Test;
+import mockit.Tested;
 
 /**
  *
  */
 public class LinearRankingTest {
 
+    TestDataGenerator testDataGenerator = new TestDataGenerator();
+
+    StoryValidator _storyValidator = new StoryValidator();
+
     @Tested
-    LinearRanking linearRanking;
+    LinearRanking ranking;
 
     @Test
-    public void testRankingWorks(@Injectable List<ValidatorEntry> list, @Injectable Iterator iterator) throws Exception {
-        ValidatorEntry validatorEntry = new ValidatorEntry(null, 0, new ArrayList<Violation>());
-        List<ValidatorEntry> testEntries = Arrays.asList(validatorEntry);
+    public void testRankingIsZeroWithUnscoredItemsWorks() throws Exception
+    {
+        List<ValidatorEntry> testEntries = testDataGenerator.getGoodValidatorItems(10);
+        float rank = ranking.createRanking(testEntries);
+        assertThat(rank).isEqualTo(0.0f);
+    }
 
-        new Expectations() {
-            {
-                list.size();
-                result = 4;
-
-                list.iterator();
-                result = testEntries.iterator();
-            }
-        };
-        float ranking = linearRanking.createRanking(list);
-        assertThat(ranking).isEqualTo(.0f);
+    @Test
+    public void testRankingIsOneWithPerfectItemsWorks() throws Exception
+    {
+        List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getGoodValidatorItems(20));
+        float rank = ranking.createRanking(testEntries);
+        assertThat(rank).isEqualTo(1.0f);
     }
 }

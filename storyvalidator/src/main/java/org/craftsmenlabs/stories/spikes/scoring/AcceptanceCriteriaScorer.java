@@ -9,36 +9,40 @@ import org.craftsmenlabs.stories.api.models.*;
  */
 public class AcceptanceCriteriaScorer implements Scorer{
 
+    public static final int MINIMUM_LENGTH_OF_ACC_CRITERIA = 10;
+
     @Override
     public float performScorer(ValidatorEntry validatorEntry) {
         String criteria = validatorEntry.getIssue().getAcceptanceCriteria();
-        //TODO: add to lower case?
-        //String criteria = validatorEntry.getIssue().getAcceptanceCriteria().toLowerCase();
+
         List<Violation> violations = validatorEntry.getViolations();
         float points = 0f;
 
-        if(criteria == null){
+        if (criteria == null || criteria.length() < MINIMUM_LENGTH_OF_ACC_CRITERIA)
+        {
 
             return points;
         }else{
             criteria = criteria.toLowerCase();
         }
 
-
-        if(criteria.contains("given")){
+        if (criteria.toLowerCase().contains("given"))
+        {
             points += 0.3333;
         }else{
             violations.add(new CriteriaViolation(ViolationType.CriteriaGivenClauseViolation, ""));
         }
 
-        if(criteria.contains("when")){
+        if (criteria.toLowerCase().contains("when"))
+        {
             points += 0.3333;
         }else{
             violations.add(new CriteriaViolation(ViolationType.CriteriaWhenClauseViolation, ""));
 
         }
 
-        if(criteria.contains("then")){
+        if (criteria.toLowerCase().contains("then"))
+        {
             points += 0.3333;
         }else{
             violations.add(new CriteriaViolation(ViolationType.CriteriaThenClauseViolation, ""));
