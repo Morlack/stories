@@ -10,7 +10,8 @@ import org.craftsmenlabs.stories.spikes.TestDataGenerator;
 import org.junit.Test;
 import mockit.Tested;
 
-public class CurvedRankingTest {
+public class CurvedRankingTest implements RankingTest
+{
 
     @Tested
     CurvedRanking ranking;
@@ -19,21 +20,21 @@ public class CurvedRankingTest {
 
     StoryValidator _storyValidator = new StoryValidator();
 
-    @Test
+    @Override @Test
     public void testRankingHandlesNullWorks() throws Exception
     {
         float rank = ranking.createRanking(null);
         assertThat(rank).isEqualTo(0.0f);
     }
 
-    @Test
+    @Override @Test
     public void testRankingHandlesEmptyWorks() throws Exception
     {
         float rank = ranking.createRanking(Collections.emptyList());
         assertThat(rank).isEqualTo(0.0f);
     }
 
-    @Test
+    @Override @Test
     public void testRankingIsZeroWithOnlyUnscoredItemsWorks() throws Exception
     {
         List<ValidatorEntry> testEntries = testDataGenerator.getGoodValidatorItems(10);
@@ -41,7 +42,7 @@ public class CurvedRankingTest {
         assertThat(rank).isEqualTo(0.0f);
     }
 
-    @Test
+    @Override @Test
     public void testRankingIsOneWithPerfectItemsWorks() throws Exception
     {
         List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getGoodValidatorItems(20));
@@ -49,7 +50,7 @@ public class CurvedRankingTest {
         assertThat(rank).isEqualTo(1.0f);
     }
 
-    @Test
+    @Override @Test
     public void testRankingRankWithMixedSethWorks() throws Exception
     {
         List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
@@ -57,7 +58,7 @@ public class CurvedRankingTest {
         assertThat(rank).isCloseTo(0.62f, withinPercentage(1));
     }
 
-    @Test
+    @Override @Test
     public void testRankingIncreasesOnGoodInputWorks() throws Exception
     {
         List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
@@ -74,7 +75,7 @@ public class CurvedRankingTest {
         assertThat(rank).isLessThan(rank3);
     }
 
-    @Test
+    @Override @Test
     public void testRankingDecreasesOnBadInputWorks() throws Exception
     {
         List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
@@ -91,7 +92,7 @@ public class CurvedRankingTest {
         assertThat(rank).isGreaterThan(rank3);
     }
 
-    @Test
+    @Override @Test
     public void testRankingDecreasesMinimalOnBadBottomInputWorks() throws Exception
     {
         List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
@@ -106,7 +107,7 @@ public class CurvedRankingTest {
         assertThat(rank).isGreaterThan(rank3);
     }
 
-    @Test
+    @Override @Test
     public void testCurve() throws Exception
     {
         float curve = ranking.curvedQuotient(10, 20);
