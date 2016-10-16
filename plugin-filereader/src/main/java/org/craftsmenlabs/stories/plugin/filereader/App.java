@@ -1,8 +1,9 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
-import com.beust.jcommander.JCommander;
+import org.craftsmenlabs.stories.api.models.Rating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.beust.jcommander.JCommander;
 
 public class App {
     private final Logger logger = LoggerFactory.getLogger(App.class);
@@ -19,7 +20,17 @@ public class App {
         print(parameters);
 
         PluginExecutor pluginExecutor = new PluginExecutor();
-        pluginExecutor.execute(parameters);
+        Rating rating = pluginExecutor.execute(parameters);
+        if (rating == Rating.SUCCES)
+        {
+            logger.info("Storyvalidator passed!");
+            System.exit(0);
+        }
+        else
+        {
+            logger.info("Storyvalidator failed!");
+            System.exit(-1);
+        }
 
         logger.info("Finished stories plugin.");
     }

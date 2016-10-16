@@ -1,7 +1,9 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
-import org.craftsmenlabs.stories.api.models.Issue;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.craftsmenlabs.stories.api.models.*;
 import org.craftsmenlabs.stories.spike.isolator.JiraExportParser;
 import org.craftsmenlabs.stories.spike.isolator.SentenceSplitter;
 import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
@@ -9,10 +11,6 @@ import org.craftsmenlabs.stories.spikes.StoryValidator;
 import org.craftsmenlabs.stories.spikes.reporting.ValidateorConsoleReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class PluginExecutor {
 
@@ -24,13 +22,17 @@ public class PluginExecutor {
         storyValidator = new StoryValidator();
     }
 
-    public void execute(CommandlineParameters parameters) {
+    public Rating execute(CommandlineParameters parameters)
+    {
         List<ValidatorEntry> entries = storyValidator.convertToValidatorEntries(getIssues(parameters.getStoryFilePath()));
 
         float ranking = storyValidator.rankStories(entries);
 
         validationConsoleReporter.reportOnStories(entries);
         validationConsoleReporter.rankingReport(ranking);
+
+        //Multiply times 100%
+        return storyValidator.rateRanking(ranking * 100);
     }
 
     protected List<Issue> getIssues(String filePath) {
@@ -50,8 +52,7 @@ public class PluginExecutor {
                 .collect(Collectors.toList());
     }
 
-
-//    protected List<String> getIssues(String fileLocation, String delimiter) {
+    //    protected List<String> getIssues() {
 //        //TODO: Something with reading the csv
 //
 //        List<String> tempItemsUntilTodoIsFixed = new ArrayList<>();
