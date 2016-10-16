@@ -107,7 +107,7 @@ public class CurvedRankingTest implements RankingTest
         assertThat(rank).isGreaterThan(rank3);
     }
 
-    @Override @Test
+    @Test
     public void testCurve() throws Exception
     {
         float curve = ranking.curvedQuotient(10, 20);

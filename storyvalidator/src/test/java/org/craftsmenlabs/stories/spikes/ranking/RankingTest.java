@@ -22,6 +22,4 @@ public interface RankingTest
 	@Test void testRankingDecreasesOnBadInputWorks() throws Exception;
 
 	@Test void testRankingDecreasesMinimalOnBadBottomInputWorks() throws Exception;
-
-	@Test void testCurve() throws Exception;
 }

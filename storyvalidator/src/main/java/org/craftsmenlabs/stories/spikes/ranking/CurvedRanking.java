@@ -16,7 +16,7 @@ public class CurvedRanking implements Ranking
 		}
 		float scoredPoints = 0f;
 		float couldHaveScored = 0f;
-		for (int i = 0; entries != null && i < entries.size(); i++)
+		for (int i = 0; i < entries.size(); i++)
 		{
 			float curvedQuotient = curvedQuotient(i, entries.size());
 			couldHaveScored += curvedQuotient;
