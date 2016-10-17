@@ -14,14 +14,12 @@ Things we meassure:
 
 
 ## Getting started
-Currently only Jira is supported.
-
 ### Prerequisities
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [Jira](https://jira.atlassian.com) - Issue & Project tracking
+* [Jira](https://jira.atlassian.com) - Issue & Project tracking. Currently Stories has been tested on Jira version 6.4 
 
 ## Build
-    mvn clean install
+    mvn package
 
 ## Usage
     java -jar App.jar [PARAMETERS] 

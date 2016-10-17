@@ -17,7 +17,7 @@ public class DataImportTest
 	{
 		String dataImport = _dataImport.importFrom("", "", "", "To Do");
 		System.out.println(dataImport);
-		assertThat(dataImport).contains("Unassigned");
+		assertThat(dataImport).contains("");
 	}
 
 }
