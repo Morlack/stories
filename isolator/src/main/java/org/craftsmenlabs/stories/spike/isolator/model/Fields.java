@@ -130,6 +130,9 @@ public class Fields {
     @JsonProperty("issuetype")
     public Issuetype issuetype;
 
+    @JsonProperty("status")
+    public Status status;
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

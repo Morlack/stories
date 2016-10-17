@@ -6,6 +6,7 @@
 	<artifactId>components</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<modules>
+		<module>importer</module>
 		<module>storyvalidator</module>
 		<module>isolator</module>
 		<module>plugin-filereader</module>

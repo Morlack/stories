@@ -17,4 +17,13 @@ public class CommandlineParameters {
 
     @Parameter(required = true, names = {"-dataFormat", "-df"}, description = "Format of the data {jirajson, jiracsv}")
     private String dataFromat;
+
+    @Parameter(required = false, names = {"-url"}, description = "URL of the rest-api")
+    private String url;
+
+    @Parameter(required = false, names = {"-projectKey", "-pk"}, description = "The jira-projectkey")
+    private String projectKey;
+
+    @Parameter(required = false, names = {"-authKey", "-a"}, description = "authKey for the rest authentication")
+    private String authKey;
 }

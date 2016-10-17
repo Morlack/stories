@@ -22,14 +22,22 @@ public class PluginExecutor {
     private ValidateorConsoleReporter validationConsoleReporter = new ValidateorConsoleReporter();
     FileParser fileParser;
 
+    String STATUS = "To Do";
+
     public PluginExecutor() {
         storyValidator = new StoryValidator();
     }
 
     public Rating execute(CommandlineParameters parameters) {
-        setFileParser(parameters.getDataFromat());
+        List<Issue> issues = null;
 
-        List<Issue> issues = fileParser.getIssues(new File(parameters.getStoryFilePath()));
+        if(restApiParametersAreSet(parameters)){
+            DataImport dataImport = new DataImport();
+            dataImport.importFrom(parameters.getUrl(), parameters.getProjectKey(), parameters.getAuthKey(), STATUS);
+        }else {
+            setFileParser(parameters.getDataFromat());
+            fileParser.getIssues(new File(parameters.getStoryFilePath()));
+        }
 
         issues = issues.stream()
                 .filter(issue -> issue.getUserstory() != null )
@@ -48,10 +56,17 @@ public class PluginExecutor {
         return storyValidator.rateRanking(ranking * 100);
     }
 
+    private boolean restApiParametersAreSet(CommandlineParameters parameters) {
+        return parameters.getUrl() != null &&
+                parameters.getUrl().isEmpty() &&
+                parameters.getAuthKey() != null &&
+                parameters.getAuthKey().isEmpty();
+    }
+
     /**
      * Set the fileParser based on the data format:
      * jirajson, jiracsv, trellojson, etc.
-     * @param dataFormat
+     * @param dataFormat the format of the data
      */
     private void setFileParser(String dataFormat) {
         switch( dataFormat ){
