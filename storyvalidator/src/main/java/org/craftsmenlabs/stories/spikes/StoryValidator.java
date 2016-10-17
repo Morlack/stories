@@ -1,15 +1,18 @@
 package org.craftsmenlabs.stories.spikes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.craftsmenlabs.stories.api.models.*;
+import org.craftsmenlabs.stories.api.models.Issue;
+import org.craftsmenlabs.stories.api.models.Rating;
+import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 import org.craftsmenlabs.stories.spikes.ranking.CurvedRanking;
 import org.craftsmenlabs.stories.spikes.ranking.Ranking;
 import org.craftsmenlabs.stories.spikes.rating.RatingExecutor;
 import org.craftsmenlabs.stories.spikes.scoring.StoryScorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StoryValidator
 {
@@ -23,7 +26,7 @@ public class StoryValidator
 	{
 		if (issues == null || issues.size() == 0)
 		{
-			throw new IllegalArgumentException("The list of items to convert should not be filled.");
+			throw new IllegalArgumentException("The list of items to convert should be filled.");
 		}
 		List<ValidatorEntry> entries = issues.stream()
 			//                .sorted(Comparator.comparing(Issue::getRank))
@@ -31,6 +34,7 @@ public class StoryValidator
 				ValidatorEntry.builder()
 					.issue(issue)
 					.violations(new ArrayList<>())
+					.pointsValuation(0f)
 					.build())
 			.collect(Collectors.toList());
 		return entries;
@@ -49,7 +53,7 @@ public class StoryValidator
 	{
 		if (entries == null || entries.size() == 0)
 		{
-			throw new IllegalArgumentException("The list of items to convert should not be filled.");
+			throw new IllegalArgumentException("The list of items to convert should be filled.");
 		}
 		return ranking.createRanking(entries);
 	}

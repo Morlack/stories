@@ -1,9 +1,9 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
+import com.beust.jcommander.JCommander;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.beust.jcommander.JCommander;
 
 public class App {
     private final Logger logger = LoggerFactory.getLogger(App.class);
@@ -36,6 +36,11 @@ public class App {
     }
 
     public void print(CommandlineParameters commandlineParameters) {
-        logger.info("Path to file containing Jira export: " + commandlineParameters.getStoryFilePath() +" with delimiter: "+commandlineParameters.getDelimter());
+        logger.info(
+                "Path to file containing Jira export: " + commandlineParameters.getStoryFilePath()
+                + " with delimiter: "+commandlineParameters.getDelimter()
+                + " with dataformat: " + commandlineParameters.getDataFromat()
+
+        );
     }
 }

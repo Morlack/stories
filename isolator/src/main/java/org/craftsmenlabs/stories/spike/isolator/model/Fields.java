@@ -127,6 +127,9 @@ public class Fields {
     @JsonProperty("duedate")
     public Object duedate;
 
+    @JsonProperty("issuetype")
+    public Issuetype issuetype;
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

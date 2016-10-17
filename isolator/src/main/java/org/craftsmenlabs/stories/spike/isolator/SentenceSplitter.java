@@ -3,7 +3,6 @@ package org.craftsmenlabs.stories.spike.isolator;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import org.craftsmenlabs.stories.api.models.Issue;
-import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,21 +51,27 @@ public class SentenceSplitter
 		}
 	}
 
-	public Issue splitSentence(JiraCSVIssueDTO input)
+	public Issue splitSentence(String input)
 	{
-		final String[] sentences = sentenceDetector.sentDetect(input.getDescription());
+        Issue issue = new Issue();
 
-		//currently:
-		// - first sentence => user story
-		// - second sentence => acceptance criteria
-		// by convention
-		final String userstory = sentences[0];
-		final String acceptanceCriteria = sentences[1];
+	    if(input == null || input.length() == 0){
+	        return issue;
+        }else {
+            final String[] sentences = sentenceDetector.sentDetect(input);
 
-		return Issue.builder()
-			.userstory(userstory)
-			.acceptanceCriteria(acceptanceCriteria)
-			.rank(input.getRank())
-			.build();
+            //currently:
+            // - first sentence => user story
+            // - second sentence => acceptance criteria
+            // by convention
+            if(sentences.length > 0) {
+                issue.setUserstory(sentences[0]);
+            }
+            if(sentences.length > 1){
+                issue.setAcceptanceCriteria(sentences[1]);
+            }
+
+            return issue;
+        }
 	}
 }
