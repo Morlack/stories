@@ -1,19 +1,14 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
-import org.craftsmenlabs.stories.api.models.Issue;
-import org.craftsmenlabs.stories.api.models.Rating;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.spike.isolator.parser.FileParser;
-import org.craftsmenlabs.stories.spike.isolator.parser.JiraCSVParser;
-import org.craftsmenlabs.stories.spike.isolator.parser.JiraJsonParser;
+import java.io.File;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.craftsmenlabs.stories.api.models.*;
+import org.craftsmenlabs.stories.spike.isolator.parser.*;
 import org.craftsmenlabs.stories.spikes.StoryValidator;
 import org.craftsmenlabs.stories.spikes.reporting.ValidateorConsoleReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class PluginExecutor {
 
@@ -32,6 +27,7 @@ public class PluginExecutor {
         List<Issue> issues = null;
 
         if(restApiParametersAreSet(parameters)){
+            setFileParser(parameters.getDataFromat());
             DataImport dataImport = new DataImport();
             String data = dataImport.importFrom(parameters.getUrl(), parameters.getProjectKey(), parameters.getAuthKey(), STATUS);
             issues = fileParser.getIssues(data);
@@ -59,9 +55,9 @@ public class PluginExecutor {
 
     private boolean restApiParametersAreSet(CommandlineParameters parameters) {
         return parameters.getUrl() != null &&
-                parameters.getUrl().isEmpty() &&
+            !parameters.getUrl().isEmpty() &&
                 parameters.getAuthKey() != null &&
-                parameters.getAuthKey().isEmpty();
+            !parameters.getAuthKey().isEmpty();
     }
 
     /**
