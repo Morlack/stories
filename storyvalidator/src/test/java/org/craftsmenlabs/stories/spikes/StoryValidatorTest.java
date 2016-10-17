@@ -3,6 +3,7 @@ package org.craftsmenlabs.stories.spikes;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collections;
 import java.util.List;
+import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 import org.craftsmenlabs.stories.spikes.ranking.BinaryRanking;
 import org.craftsmenlabs.stories.spikes.ranking.LinearRanking;
@@ -70,4 +71,10 @@ public class StoryValidatorTest
 		storyValidator.rankStories(Collections.emptyList());
 	}
 
+	@Test
+	public void testRateRanking() throws Exception
+	{
+		Rating rating = storyValidator.rateRanking(80);
+		assertThat(rating).isEqualTo(Rating.SUCCES);
+	}
 }
