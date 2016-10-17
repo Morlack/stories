@@ -33,10 +33,11 @@ public class PluginExecutor {
 
         if(restApiParametersAreSet(parameters)){
             DataImport dataImport = new DataImport();
-            dataImport.importFrom(parameters.getUrl(), parameters.getProjectKey(), parameters.getAuthKey(), STATUS);
+            String data = dataImport.importFrom(parameters.getUrl(), parameters.getProjectKey(), parameters.getAuthKey(), STATUS);
+            issues = fileParser.getIssues(data);
         }else {
             setFileParser(parameters.getDataFromat());
-            fileParser.getIssues(new File(parameters.getStoryFilePath()));
+            issues = fileParser.getIssues(new File(parameters.getStoryFilePath()));
         }
 
         issues = issues.stream()
