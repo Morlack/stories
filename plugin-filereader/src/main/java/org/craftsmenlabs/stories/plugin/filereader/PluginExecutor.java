@@ -1,5 +1,10 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
+import java.io.File;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.craftsmenlabs.stories.api.models.*;
+import org.craftsmenlabs.stories.spike.isolator.parser.*;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
@@ -37,6 +42,20 @@ public class PluginExecutor {
         String data = importer.getDataAsString();
         Parser parser = getParser(parameters.getDataFromat());
 
+        if(restApiParametersAreSet(parameters)){
+            setFileParser(parameters.getDataFromat());
+            DataImport dataImport = new DataImport();
+            String data = dataImport.importFrom(parameters.getUrl(), parameters.getProjectKey(), parameters.getAuthKey(), STATUS);
+            issues = fileParser.getIssues(data);
+        }else {
+            setFileParser(parameters.getDataFromat());
+            issues = fileParser.getIssues(new File(parameters.getStoryFilePath()));
+        }
+
+        issues = issues.stream()
+                .filter(issue -> issue.getUserstory() != null )
+                .filter(issue -> !issue.getUserstory().isEmpty())
+                .collect(Collectors.toList());
         List<Issue> issues =
                 parser.getIssues(data)
                         .stream()
@@ -69,11 +88,10 @@ public class PluginExecutor {
 
     private boolean restApiParametersAreSet(CommandlineParameters parameters) {
         return parameters.getUrl() != null &&
-                parameters.getUrl().isEmpty() &&
+            !parameters.getUrl().isEmpty() &&
                 parameters.getAuthKey() != null &&
-                parameters.getAuthKey().isEmpty();
+            !parameters.getAuthKey().isEmpty();
     }
-
 
     /**
      * Set the parser based on the data format:
