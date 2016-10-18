@@ -23,12 +23,10 @@ public class App {
         Rating rating = pluginExecutor.execute(parameters);
         if (rating == Rating.SUCCES)
         {
-            logger.info("Storyvalidator passed!");
             System.exit(0);
         }
         else
         {
-            logger.info("Storyvalidator failed!");
             System.exit(-1);
         }
 

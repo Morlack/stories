@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class JiraCSVParser implements Parser {
 
     private static final String[] HEADER = {"Project", "Key", "Summary", "JiraJsonIssue Type", "Status", "Priority", "Resolution", "Assignee", "Reporter", "Creator", "Created", "Last Viewed", "Updated", "Resolved", "Affects Version/s", "Fix Version/s", "Component/s", "Due Date", "Votes", "Watchers", "Images", "Original Estimate", "Remaining Estimate", "Time Spent", "Work Ratio", "Sub-Tasks", "Linked Issues", "Environment", "Description", "Security Level", "Progress", "_ Progress", "_ Time Spent", "_ Remaining Estimate", "_ Original Estimate", "Labels", "Release Notes", "Fixed in build", "Tested version", "Severity", "Sprint", "Epic Link", "Rank", "Rank (Obsolete)", "Flagged", "Epic/Theme", "Story Points", "Business Value"};

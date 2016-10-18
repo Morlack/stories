@@ -66,10 +66,14 @@ public class SentenceSplitter
             // by convention
             if(sentences.length > 0) {
                 issue.setUserstory(sentences[0]);
-            }
+            }else{
+				issue.setUserstory("");
+			}
             if(sentences.length > 1){
                 issue.setAcceptanceCriteria(sentences[1]);
-            }
+            }else{
+				issue.setAcceptanceCriteria("");
+			}
 
             return issue;
         }

@@ -21,9 +21,7 @@ public class AcceptanceCriteriaScorer {
         List<Violation> violations = new ArrayList<>();
         float points = 0f;
 
-        if (criteria != null
-                && criteria.length() >= MINIMUM_LENGTH_OF_ACC_CRITERIA
-                ) {
+        if (criteria != null && criteria.length() >= MINIMUM_LENGTH_OF_ACC_CRITERIA) {
             criteria = criteria.toLowerCase();
 
             if (criteria.contains("given")) {

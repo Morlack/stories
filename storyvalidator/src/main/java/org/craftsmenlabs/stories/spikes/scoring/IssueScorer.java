@@ -1,6 +1,5 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
-import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 import org.craftsmenlabs.stories.api.models.validatorentry.AcceptanceCriteriaValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.EstimationValidatorEntry;
@@ -8,10 +7,9 @@ import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.UserStoryValidatorEntry;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Assigns points to an issue criteria, based on all
+ * Assigns points to an issue, based on all
  * underlying fields, such as user story, acceptancecriteria, estimated points
  */
 public class IssueScorer {
@@ -23,15 +21,13 @@ public class IssueScorer {
 
         float pointsValuation =
                 (userStoryValidatorEntry.getPointsValuation()
-               + acceptanceCriteriaValidatorEntry.getPointsValuation()
-               + estimationValidatorEntry.getPointsValuation()) / 2;
-
-        List<Violation> violations = new ArrayList<>();
+                + acceptanceCriteriaValidatorEntry.getPointsValuation())
+                / 2;
 
         return IssueValidatorEntry
                 .builder()
                 .issue(issue)
-                .violations(violations)
+                .violations(new ArrayList<>())
                 .pointsValuation(pointsValuation)
                 .userStoryValidatorEntry(userStoryValidatorEntry)
                 .acceptanceCriteriaValidatorEntry(acceptanceCriteriaValidatorEntry)

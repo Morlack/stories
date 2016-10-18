@@ -13,10 +13,7 @@ import java.util.stream.Collectors;
 public class BacklogScorer {
 
     public static BacklogValidatorEntry performScorer(Backlog backlog, Ranking ranking) {
-        List<IssueValidatorEntry> issueValidatorEntries =
-                backlog.getIssues().stream()
-                        .map(IssueScorer::performScorer)
-                        .collect(Collectors.toList());
+        List<IssueValidatorEntry> issueValidatorEntries = getValidatedIssues(backlog);
 
         BacklogValidatorEntry backlogValidatorEntry =
                 BacklogValidatorEntry.builder()
@@ -29,5 +26,11 @@ public class BacklogScorer {
         backlogValidatorEntry.setPointsValuation(points);
 
         return backlogValidatorEntry;
+    }
+
+    private static List<IssueValidatorEntry> getValidatedIssues(Backlog backlog) {
+        return backlog.getIssues().stream()
+                .map(IssueScorer::performScorer)
+                .collect(Collectors.toList());
     }
 }

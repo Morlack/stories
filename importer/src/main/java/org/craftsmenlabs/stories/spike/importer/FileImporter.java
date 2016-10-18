@@ -5,8 +5,6 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
 
 public class FileImporter implements Importer{
     String filename;
@@ -22,12 +20,6 @@ public class FileImporter implements Importer{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        List<String> lines = Arrays.asList(input.split("\n"));
-
-        //drop header and footer
-        input = String.join("\n", lines.subList(1, lines.size() - 1));
-
         return input;
     }
 

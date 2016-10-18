@@ -49,8 +49,8 @@ public class PluginExecutor {
 
         BacklogValidatorEntry backlogValidatorEntry = BacklogScorer.performScorer(backlog, new CurvedRanking());
 
-        validationConsoleReporter.reportOnStories(backlogValidatorEntry.getIssueValidatorEntries());
-        validationConsoleReporter.rankingReport(backlogValidatorEntry.getPointsValuation());
+        validationConsoleReporter.reportOnBacklog(backlogValidatorEntry);
+
 
         //Multiply by 100%
         return storyValidator.rateRanking(backlogValidatorEntry.getPointsValuation() * 100);
