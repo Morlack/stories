@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.craftsmenlabs.stories.spikes</groupId>
-	<artifactId>components</artifactId>
+	<artifactId>stories</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<modules>
 		<module>importer</module>
@@ -23,12 +23,22 @@
 		<java.version>1.8</java.version>
 		<junit.version>4.8.2</junit.version>
 		<sl4j.version>1.7.21</sl4j.version>
+		<nlp.version>1.6.0</nlp.version>
 		<logback.version>1.1.7</logback.version>
 		<lombok.version>1.16.8</lombok.version>
 		<jmockit.verion>1.24</jmockit.verion>
 		<assertj.version>3.4.0</assertj.version>
 		<pittest.version>1.1.10</pittest.version>
 		<maven.compiler.version>3.5.1</maven.compiler.version>
+		<commons.version>2.5</commons.version>
+		<jackson.version>2.8.3</jackson.version>
+		<jersey.client.version>2.23.2</jersey.client.version>
+		<shade.version>2.4.3</shade.version>
+		<jcommander.version>1.58</jcommander.version>
+		<guava.version>19.0</guava.version>
+		<easy-properties>1.3.0</easy-properties>
+		<commons.csv.version>1.4</commons.csv.version>
+
 	</properties>
 
 	<dependencyManagement>
@@ -60,6 +70,64 @@
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
 				<version>${lombok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.beust</groupId>
+				<artifactId>jcommander</artifactId>
+				<version>${jcommander.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.apache.opennlp</groupId>
+				<artifactId>opennlp-tools</artifactId>
+				<version>${nlp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<!--jackson-->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-client</artifactId>
+				<version>${jersey.client.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-csv</artifactId>
+				<version>${commons.csv.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.github.benas</groupId>
+				<artifactId>easy-properties</artifactId>
+				<version>${easy-properties}</version>
 			</dependency>
 
 			<!-- test dependencies -->
