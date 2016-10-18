@@ -19,8 +19,8 @@ public class ValidateorConsoleReporter
 	}
 
     public void reportOnBacklog(BacklogValidatorEntry backlogValidatorEntry){
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n\n\n" +
+        //header
+        logger.info("\n\n\n" +
                 "   ,d88~/\\   d8                                                d8                   \n" +
                 "   8888/   _d88__  e88~-_  888-~\\ Y88b  / 888-~88e   /~~~8e  _d88__  e88~-_  888-~\\ \n" +
                 "   `Y88b    888   d888   i 888     Y888/  888  888       88b  888   d888   i 888    \n" +
@@ -29,16 +29,15 @@ public class ValidateorConsoleReporter
                 "   \\/_88P'  \"88_/  \"88_-~  888      /     888  888  \"88_-888  \"88_/  \"88_-~  888    \n" +
                 "                                  _/                                                \n\n\n");
 
+        //verbose output
         List<IssueValidatorEntry> entries = backlogValidatorEntry.getIssueValidatorEntries();
         entries.forEach(issue -> reportOnIssue(issue));
 
         //Summary
         RatingExecutor ratingExecutor = new RatingExecutor();
-        sb.append("Processed a total of " + entries.size() + " issues.\n");
-        sb.append("Total score of " + new DecimalFormat("#.##").format(backlogValidatorEntry.getPointsValuation()*100f) + "% \n");
-        sb.append("Rated: " + ratingExecutor.retrieveRating(backlogValidatorEntry.getPointsValuation()) + "\n");
-
-        logger.info(sb.toString());
+        logger.info("Processed a total of " + entries.size() + " issues.\n");
+        logger.info("Total score of " + new DecimalFormat("#.##").format(backlogValidatorEntry.getPointsValuation()*100f) + "% \n");
+        logger.info("Rated: " + ratingExecutor.retrieveRating(backlogValidatorEntry.getPointsValuation()) + "\n");
     }
 
 
