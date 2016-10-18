@@ -1,8 +1,10 @@
 package org.craftsmenlabs.stories.spikes.ranking;
 
-import java.util.List;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
+import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.craftsmenlabs.stories.spikes.configuration.Configuration;
+
+import java.util.List;
 
 /**
  *
@@ -16,7 +18,7 @@ public class RankingExecutor
 		Configuration configuration = new Configuration();
 		if (configuration.getDesiredRankingStrategy() == null || configuration.getDesiredRankingStrategy().length() == 0)
 		{
-			ranking = new LinearRanking();
+			//ranking = new LinearRanking();
 		}
 		else
 		{
@@ -29,9 +31,9 @@ public class RankingExecutor
 		ranking = chooseRankingStrategy(strategy);
 	}
 
-	public void executeRanking(List<ValidatorEntry> list)
+	public void executeRanking(List<IssueValidatorEntry> list)
 	{
-		ranking.createRanking(list);
+		ranking.createRanking(BacklogValidatorEntry.builder().issueValidatorEntries(list).build());
 	}
 
 	private Ranking chooseRankingStrategy(String strategy)
@@ -40,12 +42,12 @@ public class RankingExecutor
 		{
 		case "curved":
 			return new CurvedRanking();
-		case "linear":
-			return new LinearRanking();
-		case "binary":
-			return new BinaryRanking();
+//		case "linear":
+//			return new LinearRanking();
+//		case "binary":
+//			return new BinaryRanking();
 		default:
-			return new LinearRanking();
+			return new CurvedRanking();
 		}
 	}
 }

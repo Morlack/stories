@@ -2,7 +2,7 @@ package org.craftsmenlabs.stories.spike.isolator;
 
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
-import org.craftsmenlabs.stories.api.models.Issue;
+import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 
 import java.io.IOException;
 import java.io.InputStream;

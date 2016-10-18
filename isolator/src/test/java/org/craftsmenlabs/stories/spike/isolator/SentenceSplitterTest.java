@@ -4,7 +4,7 @@ import mockit.Expectations;
 import mockit.Mocked;
 import mockit.Tested;
 import opennlp.tools.sentdetect.SentenceDetectorME;
-import org.craftsmenlabs.stories.api.models.Issue;
+import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

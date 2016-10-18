@@ -1,7 +1,6 @@
 package org.craftsmenlabs.stories.spikes.reporting;
 
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-import org.craftsmenlabs.stories.api.models.Violation;
+import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,20 +15,24 @@ public class ValidateorConsoleReporter
 		logger.info("Overall score is: " + (Math.round(ranking * 100)) + "%");
 	}
 
-	public void reportOnStories(List<ValidatorEntry> entries)
+	public void reportOnStories(List<IssueValidatorEntry> entries)
 	{
 		for (int i = 0; i < entries.size(); i++)
 		{
+            IssueValidatorEntry entry = entries.get(i);
+			float pointsValuation = entry.getPointsValuation();
+			String userstory = entry.getIssue().getUserstory().replace("\n", "");
 
-			float pointsValuation = entries.get(i).getPointsValuation();
-			String userstory = entries.get(i).getIssue().getUserstory();
+			logger.info(
+			        "Item on list: " + (i + 1)
+                 + " points:" + pointsValuation + "\t\t"
+                 + " key: " + entry.getIssue().getKey() + "\t"
+                 + userstory );
 
-			logger.info("Item on list: " + (i + 1) + " points:" + pointsValuation + "\t\t" + userstory.replace("\n", ""));
-			if(entries.get(i).getViolations()!=null && entries.get(i).getViolations().size()>0){
-				for(Violation violation : entries.get(i).getViolations()){
-					logger.info("Story validation violations found of type:"+violation.getViolationType());
-				}
-			}
+            entries.get(i)
+                    .getViolations()
+                    .forEach(violation ->
+                            logger.info("Violation found:" + violation.toColoredString()));
 		}
 	}
 }

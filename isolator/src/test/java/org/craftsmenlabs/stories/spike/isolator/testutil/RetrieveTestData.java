@@ -1,6 +1,6 @@
 package org.craftsmenlabs.stories.spike.isolator.testutil;
 
-import org.craftsmenlabs.stories.api.models.Issue;
+import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 import org.craftsmenlabs.stories.spike.isolator.model.JiraCSVIssueDTO;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class RetrieveTestData
 				"As a super office user \n"
 				+ "I would like to be informed about the alarms in my user \n"
 				+ "so I can have the most preferred alarm on top."
-		)
+				)
 		.acceptanceCriteria(
 				  "*Acceptance criteria* \n"
 				+ "Given I select an alarm \n"
@@ -160,7 +160,7 @@ public class RetrieveTestData
 				"Generated at Tue Oct 11 11:04:10 CEST 2016 by TestUser using JIRA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
 	}
 
-	public static List<JiraCSVIssueDTO> getExportedTestResultFromResource(){
+	public static List<JiraCSVIssueDTO> getExportedCSVTestResultFromResource(){
 		JiraCSVIssueDTO jiraCSVIssueDTO = JiraCSVIssueDTO.builder()
 				.key("Gareth-2001")
 				.description(
@@ -192,21 +192,166 @@ public class RetrieveTestData
 		return Arrays.asList(jiraCSVIssueDTO, jiraCSVIssueDTO, jiraCSVIssueDTO, jiraCSVIssueDTO);
 	}
 
+	public static String getExportedJiraJSONTestResultFromResource(){
+		return "{\n" +
+				"  \"expand\": \"schema,names\",\n" +
+				"  \"startAt\": 0,\n" +
+				"  \"maxResults\": 1000,\n" +
+				"  \"total\": 464,\n" +
+				"  \"issues\": [\n" +
+				"    {\n" +
+				"      \"expand\": \"operations,editmeta,changelog,transitions,renderedFields\",\n" +
+				"      \"id\": \"1721342\",\n" +
+				"      \"self\": \"http://jira.foo.bar/rest/api/2/issue/17982\",\n" +
+				"      \"key\": \"EPM-512\",\n" +
+				"      \"fields\": {\n" +
+				"        \"issuetype\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/issuetype/6\",\n" +
+				"          \"id\": \"6\",\n" +
+				"          \"description\": \"Created by JIRA Agile - do not edit or delete. Issue type for a user story.\",\n" +
+				"          \"iconUrl\": \"http://jira.foo.bar/secure/viewavatar?size=xsmall&avatarId=10915&avatarType=issuetype\",\n" +
+				"          \"name\": \"Story\",\n" +
+				"          \"subtask\": false,\n" +
+				"          \"avatarId\": 10915\n" +
+				"        },\n" +
+				"        \"components\": [],\n" +
+				"        \"timespent\": null,\n" +
+				"        \"timeoriginalestimate\": null,\n" +
+				"        \"description\": \"As a super office user I would like to be informed about the alarms in my user so I can have the most preferred alarm on top.\\n *Acceptance criteria* Given I select an alarm When a profile (or profiles) contain an Then the system displays a page with the alarm.\",\n" +
+				"        \"project\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/project/11106\",\n" +
+				"          \"id\": \"11106\",\n" +
+				"          \"key\": \"EPM\",\n" +
+				"          \"name\": \"epic interslicer\",\n" +
+				"          \"avatarUrls\": {\n" +
+				"            \"48x48\": \"http://jira.foo.bar/secure/projectavatar?pid=11106&avatarId=11829\",\n" +
+				"            \"24x24\": \"http://jira.foo.bar/secure/projectavatar?size=small&pid=11106&avatarId=11829\",\n" +
+				"            \"16x16\": \"http://jira.foo.bar/secure/projectavatar?size=xsmall&pid=11106&avatarId=11829\",\n" +
+				"            \"32x32\": \"http://jira.foo.bar/secure/projectavatar?size=medium&pid=11106&avatarId=11829\"\n" +
+				"          }\n" +
+				"        },\n" +
+				"        \"fixVersions\": [],\n" +
+				"        \"aggregatetimespent\": null,\n" +
+				"        \"resolution\": null,\n" +
+				"        \"customfield_10310\": null,\n" +
+				"        \"customfield_10302\": \"9223372036854775807\",\n" +
+				"        \"customfield_10401\": \"0|zgbujw:\",\n" +
+				"        \"customfield_10306\": null,\n" +
+				"        \"aggregatetimeestimate\": null,\n" +
+				"        \"customfield_10307\": null,\n" +
+				"        \"customfield_10308\": null,\n" +
+				"        \"resolutiondate\": null,\n" +
+				"        \"customfield_10309\": null,\n" +
+				"        \"workratio\": -1,\n" +
+				"        \"summary\": \"interslice\",\n" +
+				"        \"lastViewed\": \"2013-1-1T15:47:39.369+0200\",\n" +
+				"        \"watches\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/issue/EPM-512/watchers\",\n" +
+				"          \"watchCount\": 1,\n" +
+				"          \"isWatching\": false\n" +
+				"        },\n" +
+				"        \"creator\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/user?username=foo\",\n" +
+				"          \"name\": \"foo\",\n" +
+				"          \"key\": \"foo\",\n" +
+				"          \"emailAddress\": \"foo@wfoo.bar\",\n" +
+				"          \"avatarUrls\": {\n" +
+				"            \"48x48\": \"http://jira.foo.bar/secure/useravatar?ownerId=foo&avatarId=11826\",\n" +
+				"            \"24x24\": \"http://jira.foo.bar/secure/useravatar?size=small&ownerId=foo&avatarId=11826\",\n" +
+				"            \"16x16\": \"http://jira.foo.bar/secure/useravatar?size=xsmall&ownerId=foo&avatarId=11826\",\n" +
+				"            \"32x32\": \"http://jira.foo.bar/secure/useravatar?size=medium&ownerId=foo&avatarId=11826\"\n" +
+				"          },\n" +
+				"          \"displayName\": \"foo\",\n" +
+				"          \"active\": true,\n" +
+				"          \"timeZone\": \"Europe/Amsterdam\"\n" +
+				"        },\n" +
+				"        \"subtasks\": [],\n" +
+				"        \"created\": \"2013-1-1T10:15:19.000+0200\",\n" +
+				"        \"reporter\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/user?username=foo\",\n" +
+				"          \"name\": \"foo\",\n" +
+				"          \"key\": \"foo\",\n" +
+				"          \"emailAddress\": \"foo@foo.bar\",\n" +
+				"          \"avatarUrls\": {\n" +
+				"            \"48x48\": \"http://jira.foo.bar/secure/useravatar?ownerId=foo&avatarId=11826\",\n" +
+				"            \"24x24\": \"http://jira.foo.bar/secure/useravatar?size=small&ownerId=foo&avatarId=11826\",\n" +
+				"            \"16x16\": \"http://jira.foo.bar/secure/useravatar?size=xsmall&ownerId=foo&avatarId=11826\",\n" +
+				"            \"32x32\": \"http://jira.foo.bar/secure/useravatar?size=medium&ownerId=foo&avatarId=11826\"\n" +
+				"          },\n" +
+				"          \"displayName\": \"foo\",\n" +
+				"          \"active\": true,\n" +
+				"          \"timeZone\": \"Europe/Amsterdam\"\n" +
+				"        },\n" +
+				"        \"customfield_10000\": null,\n" +
+				"        \"aggregateprogress\": {\n" +
+				"          \"progress\": 0,\n" +
+				"          \"total\": 0\n" +
+				"        },\n" +
+				"        \"priority\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/priority/3\",\n" +
+				"          \"iconUrl\": \"http://jira.foo.bar/images/icons/priorities/major.png\",\n" +
+				"          \"name\": \"High\",\n" +
+				"          \"id\": \"3\"\n" +
+				"        },\n" +
+				"        \"customfield_10100\": null,\n" +
+				"        \"customfield_10200\": null,\n" +
+				"        \"customfield_10201\": null,\n" +
+				"        \"customfield_10300\": null,\n" +
+				"        \"labels\": [],\n" +
+				"        \"customfield_10301\": null,\n" +
+				"        \"environment\": null,\n" +
+				"        \"timeestimate\": null,\n" +
+				"        \"aggregatetimeoriginalestimate\": null,\n" +
+				"        \"versions\": [],\n" +
+				"        \"duedate\": null,\n" +
+				"        \"progress\": {\n" +
+				"          \"progress\": 0,\n" +
+				"          \"total\": 0\n" +
+				"        },\n" +
+				"        \"issuelinks\": [],\n" +
+				"        \"votes\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/issue/EPM-512/votes\",\n" +
+				"          \"votes\": 0,\n" +
+				"          \"hasVoted\": false\n" +
+				"        },\n" +
+				"        \"assignee\": null,\n" +
+				"        \"updated\": \"2013-1-1T11:11:59.000+0200\",\n" +
+				"        \"status\": {\n" +
+				"          \"self\": \"http://jira.foo.bar/rest/api/2/status/10002\",\n" +
+				"          \"description\": \"\",\n" +
+				"          \"iconUrl\": \"http://jira.foo.bar/images/icons/statuses/open.png\",\n" +
+				"          \"name\": \"To Do\",\n" +
+				"          \"id\": \"10002\",\n" +
+				"          \"statusCategory\": {\n" +
+				"            \"self\": \"http://jira.foo.bar/rest/api/2/statuscategory/2\",\n" +
+				"            \"id\": 2,\n" +
+				"            \"key\": \"new\",\n" +
+				"            \"colorName\": \"blue-gray\",\n" +
+				"            \"name\": \"To Do\"\n" +
+				"          }\n" +
+				"        }\n" +
+				"      }\n" +
+				"    }\n" +
+				"  ]\n" +
+				"}\n";
+	}
 
 	public static Issue getTestIssueFromResource(){
 		return Issue.builder()
 				.userstory(
-					"As a super office user\n" +
-					"I would like to be informed about the alarms in my user\n" +
+					"As a super office user " +
+					"I would like to be informed about the alarms in my user " +
 					"so I can have the most preferred alarm on top."
 				)
 				.acceptanceCriteria(
-					"*Acceptance criteria*\n" +
-					"Given I select an alarm\n" +
-					"When a profile (or profiles) contain an\n" +
+					"*Acceptance criteria* " +
+					"Given I select an alarm " +
+					"When a profile (or profiles) contain an " +
 					"Then the system displays a page with the alarm."
 				)
 				.rank("0|zgbujw:")
+				.key("EPM-512")
+				.estimation(null)
 				.build();
 	}
 }

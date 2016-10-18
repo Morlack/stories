@@ -3,8 +3,8 @@ package org.craftsmenlabs.stories.spikes.scoring;
 import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Tested;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 import org.craftsmenlabs.stories.api.models.Violation;
+import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class AcceptanceCriteriaScorerTest {
     AcceptanceCriteriaScorer criteriaScorer;
 
     @Test
-    public void testPerformScorer(@Injectable ValidatorEntry entry) throws Exception {
+    public void testPerformScorer(@Injectable IssueValidatorEntry entry) throws Exception {
         new Expectations() {{
             entry.getIssue().getAcceptanceCriteria();
             result = "Given \n"
@@ -27,32 +27,31 @@ public class AcceptanceCriteriaScorerTest {
                     + "Then .";
         }};
 
-        float score = criteriaScorer.performScorer(entry);
+        float score = criteriaScorer.performScorer(entry.getIssue().getAcceptanceCriteria()).getPointsValuation();
         assertThat(score).isCloseTo(1.0f, withinPercentage(5));
     }
 
     @Test
-    public void testPerformScorer_ReturnsZeroOnEmpty(@Injectable ValidatorEntry entry) throws Exception {
+    public void testPerformScorer_ReturnsZeroOnEmpty(@Injectable IssueValidatorEntry entry) throws Exception {
         List<Violation> v = new ArrayList<>();
         new Expectations() {{
             entry.getIssue().getAcceptanceCriteria();
             result = "";
-            entry.getViolations();
-            result = v;
+
         }};
 
-        float score = criteriaScorer.performScorer(entry);
+        float score = criteriaScorer.performScorer(entry.getIssue().getAcceptanceCriteria()).getPointsValuation();
         assertThat(score).isCloseTo(0.0f, withinPercentage(1));
     }
 
     @Test
-    public void testPerformScorer_ReturnsNullOnEmpty(@Injectable ValidatorEntry entry) throws Exception {
+    public void testPerformScorer_ReturnsNullOnEmpty(@Injectable IssueValidatorEntry entry) throws Exception {
         new Expectations() {{
             entry.getIssue().getAcceptanceCriteria();
             result = null;
         }};
 
-        float score = criteriaScorer.performScorer(entry);
+        float score = criteriaScorer.performScorer(entry.getIssue().getAcceptanceCriteria()).getPointsValuation();
         assertThat(score).isCloseTo(0.0f, withinPercentage(1));
     }
 }

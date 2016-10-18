@@ -1,6 +1,7 @@
 package org.craftsmenlabs.stories.spike.isolator;
 
 import org.apache.commons.io.FileUtils;
+import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 import org.craftsmenlabs.stories.spike.isolator.model.JiraJsonIssue;
 import org.craftsmenlabs.stories.spike.isolator.parser.JiraJsonParser;
 import org.junit.Ignore;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -29,7 +31,7 @@ public class JiraJsonParserTest {
                     .filter(jiraJsonIssue -> jiraJsonIssue.getFields().getIssuetype().name.equals("Story"))
                     .forEach(jiraJsonIssue -> System.out.println(jiraJsonIssue));
 
-            assertTrue(true);
+            assertTrue(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,7 +44,23 @@ public class JiraJsonParserTest {
         try {
             String input = FileUtils.readFileToString(file, Charset.defaultCharset());
 
-            jiraJsonParser.getIssues(input).forEach(System.out::println);
+            jiraJsonParser.getIssues(input)
+                    .stream()
+                    .sorted(Comparator.comparing(Issue::getRank))
+                    .forEach(issue -> {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("Key= ");
+                        sb.append(issue.getKey());
+                        sb.append(", ");
+                        sb.append("Rank= ");
+                        sb.append(issue.getRank());
+                        sb.append(", ");
+                        sb.append("Est= ");
+                        sb.append(issue.getEstimation());
+                        sb.append(" ");
+
+                        System.out.println(sb.toString());
+            });
 
             assertTrue(false);
         } catch (IOException e) {

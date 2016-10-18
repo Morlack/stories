@@ -3,8 +3,8 @@ package org.craftsmenlabs.stories.spikes.scoring;
 import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Tested;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 import org.craftsmenlabs.stories.api.models.Violation;
+import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class StoryScorerTest {
     StoryScorer storyScorer;
 
     @Test
-    public void testPerformScorer(@Injectable ValidatorEntry entry) throws Exception {
+    public void testPerformScorer(@Injectable IssueValidatorEntry entry) throws Exception {
         new Expectations() {{
             entry.getIssue().getUserstory();
             result = "As a super office user \n"
@@ -26,32 +26,30 @@ public class StoryScorerTest {
                 + "so I can have the most preferred alarm on top.";
         }};
 
-        float score = storyScorer.performScorer(entry);
+        float score = storyScorer.performScorer(entry.getIssue().getUserstory()).getPointsValuation();
         assertThat(score).isEqualTo(1.0f);
     }
 
     @Test
-    public void testPerformScorer_ReturnsZeroOnEmpty(@Injectable ValidatorEntry entry) throws Exception {
+    public void testPerformScorer_ReturnsZeroOnEmpty(@Injectable IssueValidatorEntry entry) throws Exception {
         List<Violation> v = new ArrayList<>();
         new Expectations() {{
             entry.getIssue().getUserstory();
             result = "";
-            entry.getViolations();
-            result = v;
         }};
 
-        float score = storyScorer.performScorer(entry);
+        float score = storyScorer.performScorer(entry.getIssue().getUserstory()).getPointsValuation();
         assertThat(score).isEqualTo(0.0f);
     }
 
-//    @Test
-//    public void testPerformScorer_ReturnsNullOnEmpty(@Injectable ValidatorEntry entry) throws Exception {
-//        new Expectations() {{
-//            entry.getIssue().getUserstory();
-//            result = null;
-//        }};
-//
-//        float score = storyScorer.performScorer(entry);
-//        assertThat(score).isEqualTo(0.0f);
-//    }
+    @Test
+    public void testPerformScorer_ReturnsNullOnEmpty(@Injectable IssueValidatorEntry entry) throws Exception {
+        new Expectations() {{
+            entry.getIssue().getUserstory();
+            result = null;
+        }};
+
+        float score = storyScorer.performScorer(entry.getIssue().getUserstory()).getPointsValuation();
+        assertThat(score).isEqualTo(0.0f);
+    }
 }

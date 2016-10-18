@@ -1,6 +1,6 @@
 package org.craftsmenlabs.stories.spikes.testutil;
 
-import org.craftsmenlabs.stories.api.models.Issue;
+import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 
 import java.util.ArrayList;
 import java.util.List;

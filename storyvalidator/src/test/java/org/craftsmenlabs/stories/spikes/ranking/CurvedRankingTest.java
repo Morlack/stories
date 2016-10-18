@@ -1,14 +1,16 @@
 package org.craftsmenlabs.stories.spikes.ranking;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.withinPercentage;
-import java.util.Collections;
-import java.util.List;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import mockit.Tested;
+import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
+import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
 import org.craftsmenlabs.stories.spikes.StoryValidator;
 import org.craftsmenlabs.stories.spikes.TestDataGenerator;
 import org.junit.Test;
-import mockit.Tested;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withinPercentage;
 
 public class CurvedRankingTest implements RankingTest
 {
@@ -30,80 +32,82 @@ public class CurvedRankingTest implements RankingTest
     @Override @Test
     public void testRankingHandlesEmptyWorks() throws Exception
     {
-        float rank = ranking.createRanking(Collections.emptyList());
+        BacklogValidatorEntry backlogValidatorEntryWithEmptyList = BacklogValidatorEntry.builder().issueValidatorEntries(null).build();
+        float rank = ranking.createRanking(backlogValidatorEntryWithEmptyList);
         assertThat(rank).isEqualTo(0.0f);
     }
 
     @Override @Test
     public void testRankingIsZeroWithOnlyUnscoredItemsWorks() throws Exception
     {
-        List<ValidatorEntry> testEntries = testDataGenerator.getGoodValidatorItems(10);
-        float rank = ranking.createRanking(testEntries);
+        BacklogValidatorEntry goodBacklog = testDataGenerator.getGoodBacklog(10);
+        float rank = ranking.createRanking(goodBacklog);
         assertThat(rank).isEqualTo(0.0f);
     }
 
     @Override @Test
     public void testRankingIsOneWithPerfectItemsWorks() throws Exception
     {
-        List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getGoodValidatorItems(20));
+        List<Issue> issues = testDataGenerator.getGoodIssues(20);
+        BacklogValidatorEntry testEntries = _storyValidator.scoreStories(issues);
         float rank = ranking.createRanking(testEntries);
-        assertThat(rank).isEqualTo(1.0f);
+        assertThat(rank).isCloseTo(1.0f, withinPercentage(1.0));
     }
 
     @Override @Test
     public void testRankingRankWithMixedSethWorks() throws Exception
     {
-        List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
+        BacklogValidatorEntry testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
         float rank = ranking.createRanking(testEntries);
-        assertThat(rank).isCloseTo(0.62f, withinPercentage(1));
+        assertThat(rank).isCloseTo(0.707f, withinPercentage(1));
     }
 
     @Override @Test
     public void testRankingIncreasesOnGoodInputWorks() throws Exception
     {
-        List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
+        BacklogValidatorEntry testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
         float rank = ranking.createRanking(testEntries);
-        assertThat(rank).isCloseTo(0.62f, withinPercentage(1));
+        assertThat(rank).isCloseTo(0.707f, withinPercentage(1));
 
-        List<ValidatorEntry> testEntries2 = _storyValidator.scoreStories(testDataGenerator.getGoodValidatorItems(3));
+        BacklogValidatorEntry testEntries2 = _storyValidator.scoreStories(testDataGenerator.getGoodIssues(3));
         float rank2 = ranking.createRanking(testEntries2);
-        assertThat(rank2).isEqualTo(1.0f);
+        assertThat(rank2).isCloseTo(1.0f, withinPercentage(1));
 
-        testEntries2.addAll(testEntries);
+        testEntries2.getIssueValidatorEntries().addAll(testEntries.getIssueValidatorEntries());
         float rank3 = ranking.createRanking(testEntries2);
-        assertThat(rank3).isCloseTo(0.692f, withinPercentage(1));
+        assertThat(rank3).isCloseTo(0.763f, withinPercentage(1));
         assertThat(rank).isLessThan(rank3);
     }
 
     @Override @Test
     public void testRankingDecreasesOnBadInputWorks() throws Exception
     {
-        List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
-        float rank = ranking.createRanking(testEntries);
-        assertThat(rank).isEqualTo(0.6202532f);
+        BacklogValidatorEntry mixedBacklog = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
+        float rank = ranking.createRanking(mixedBacklog);
+        assertThat(rank).isCloseTo(0.707f, withinPercentage(1));
 
-        List<ValidatorEntry> testEntries2 = testDataGenerator.getGoodValidatorItems(3);
-        float rank2 = ranking.createRanking(testEntries2);
+        BacklogValidatorEntry goodBacklog = testDataGenerator.getGoodBacklog(3);
+        float rank2 = ranking.createRanking(goodBacklog);
         assertThat(rank2).isEqualTo(0.0f);
 
-        testEntries2.addAll(testEntries);
-        float rank3 = ranking.createRanking(testEntries2);
-        assertThat(rank3).isCloseTo(0.50401336f, withinPercentage(1));
+        goodBacklog.getIssueValidatorEntries().addAll(mixedBacklog.getIssueValidatorEntries());
+        float rank3 = ranking.createRanking(goodBacklog);
+        assertThat(rank3).isCloseTo(0.57401336f, withinPercentage(1));
         assertThat(rank).isGreaterThan(rank3);
     }
 
     @Override @Test
     public void testRankingDecreasesMinimalOnBadBottomInputWorks() throws Exception
     {
-        List<ValidatorEntry> testEntries = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
-        float rank = ranking.createRanking(testEntries);
-        assertThat(rank).isCloseTo(0.6202532f, withinPercentage(1));
+        BacklogValidatorEntry mixedBacklog = _storyValidator.scoreStories(testDataGenerator.getMixedValidatorItems(20));
+        float rank = ranking.createRanking(mixedBacklog);
+        assertThat(rank).isCloseTo(0.707f, withinPercentage(1));
 
-        List<ValidatorEntry> unrankedEntries = testDataGenerator.getGoodValidatorItems(3);
-        testEntries.addAll(unrankedEntries);
+        BacklogValidatorEntry unrankedBacklog = testDataGenerator.getGoodBacklog(3);
+        mixedBacklog.getIssueValidatorEntries().addAll(unrankedBacklog.getIssueValidatorEntries());
 
-        float rank3 = ranking.createRanking(testEntries);
-        assertThat(rank3).isCloseTo(0.6007644f, withinPercentage(1));
+        float rank3 = ranking.createRanking(mixedBacklog);
+        assertThat(rank3).isCloseTo(0.686f, withinPercentage(1));
         assertThat(rank).isGreaterThan(rank3);
     }
 

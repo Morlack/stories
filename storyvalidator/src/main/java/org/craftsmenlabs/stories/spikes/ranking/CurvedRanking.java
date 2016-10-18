@@ -1,19 +1,24 @@
 package org.craftsmenlabs.stories.spikes.ranking;
 
+import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
+import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
+
 import java.util.List;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
 
 public class CurvedRanking implements Ranking
 {
 
 	public static final int SMOOTH_CURVE = 2;
 
-	public float createRanking(List<ValidatorEntry> entries)
+	public float createRanking(BacklogValidatorEntry backlogValidatorEntry)
 	{
-		if (entries == null || entries.size() == 0)
+		if (backlogValidatorEntry == null ||
+            backlogValidatorEntry.getIssueValidatorEntries() == null ||
+            backlogValidatorEntry.getIssueValidatorEntries().size() == 0 )
 		{
 			return 0.0f;
 		}
+		List<IssueValidatorEntry> entries = backlogValidatorEntry.getIssueValidatorEntries();
 		float scoredPoints = 0f;
 		float couldHaveScored = 0f;
 		for (int i = 0; i < entries.size(); i++)

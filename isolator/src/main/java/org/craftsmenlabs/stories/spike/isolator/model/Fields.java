@@ -91,8 +91,10 @@ public class Fields {
     public Object aggregatetimeestimate;
     @JsonProperty("customfield_10307")
     public Object customfield10307;
+
     @JsonProperty("customfield_10308")
-    public Object customfield10308;
+    public Float estimation;
+
     @JsonProperty("resolutiondate")
     public Object resolutiondate;
     @JsonProperty("customfield_10309")

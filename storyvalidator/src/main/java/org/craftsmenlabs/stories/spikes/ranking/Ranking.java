@@ -1,9 +1,7 @@
 package org.craftsmenlabs.stories.spikes.ranking;
 
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
-
-import java.util.List;
+import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
 
 public interface Ranking {
-    float createRanking(List<ValidatorEntry> entries);
+    float createRanking(BacklogValidatorEntry backlogValidatorEntry);
 }

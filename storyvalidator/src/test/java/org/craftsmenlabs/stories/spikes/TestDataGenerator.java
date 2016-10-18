@@ -1,8 +1,13 @@
 package org.craftsmenlabs.stories.spikes;
 
-import java.util.*;
-import org.craftsmenlabs.stories.api.models.Issue;
-import org.craftsmenlabs.stories.api.models.ValidatorEntry;
+import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
+import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
+import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -18,28 +23,63 @@ public class TestDataGenerator
 		List<Issue> testData = new ArrayList<>();
 		for (int i = 0; i < stories.size(); i++)
 		{
-			testData.add(Issue.builder().userstory(stories.get(i)).acceptanceCriteria(accCrits.get(i)).build());
+			testData.add(Issue.builder()
+					.userstory(stories.get(i))
+					.acceptanceCriteria(accCrits.get(i))
+                    .build());
 		}
 		return testData;
 	}
 
-	public List<ValidatorEntry> getGoodValidatorItems(int amount)
+	public List<Issue> getGoodIssues(int amount)
 	{
-		List<ValidatorEntry> testData = new ArrayList<>();
+		List<Issue> testData = new ArrayList<>();
+        List<Issue> issues = getIssues();
+
 		for (int i = 0; i < amount; i++)
 		{
-			testData.add(new ValidatorEntry(getIssues().get(0), 0.0f, new ArrayList<>()));
+			testData.add(issues.get(0));
 		}
 		return testData;
 	}
 
-	public List<ValidatorEntry> getMixedValidatorItems(int amount)
+	public List<Issue> getMixedValidatorItems(int amount)
 	{
-		List<ValidatorEntry> testData = new ArrayList<>();
-		for (int i = 0; i < amount; i++)
+		List<Issue> testData = new ArrayList<>();
+        List<Issue> issues = getIssues();
+
+        for (int i = 0; i < amount; i++)
 		{
-			testData.add(new ValidatorEntry(getIssues().get(i % 3), 0.0f, new ArrayList<>()));
+			testData.add(issues.get(i % 3));
 		}
 		return testData;
 	}
+
+    public BacklogValidatorEntry getGoodBacklog(int amount){
+        return BacklogValidatorEntry.builder().issueValidatorEntries(
+            getGoodIssues(amount).stream()
+                    .map(issue ->
+                            IssueValidatorEntry.builder()
+                                    .issue(issue)
+                                    .pointsValuation(0f)
+                                    .violations(new ArrayList<>())
+                                    .build())
+                    .collect(Collectors.toList())
+        ).build();
+    }
+
+    public BacklogValidatorEntry getMixedBacklog(int amount){
+        return BacklogValidatorEntry.builder().issueValidatorEntries(
+                getMixedValidatorItems(amount).stream()
+                        .map(issue ->
+                                IssueValidatorEntry.builder()
+                                        .issue(issue)
+                                        .pointsValuation(0f)
+                                        .violations(new ArrayList<>())
+                                        .build())
+                        .collect(Collectors.toList())
+        ).build();
+    }
+
+
 }

@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class JiraCSVParserTest {
 
     String testData = RetrieveTestData.getExportedTestDataFromResource();
-    List<JiraCSVIssueDTO> jiraIssues = RetrieveTestData.getExportedTestResultFromResource();
+    List<JiraCSVIssueDTO> jiraIssues = RetrieveTestData.getExportedCSVTestResultFromResource();
 
     @Ignore("Test is ignored, because of deprication")
     @Test
