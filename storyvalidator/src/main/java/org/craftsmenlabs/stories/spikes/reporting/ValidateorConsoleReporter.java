@@ -1,10 +1,9 @@
 package org.craftsmenlabs.stories.spikes.reporting;
 
+import java.util.List;
 import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class ValidateorConsoleReporter
 {
@@ -12,7 +11,7 @@ public class ValidateorConsoleReporter
 
 	public void rankingReport(float ranking)
 	{
-		logger.info("Overall score is: " + (Math.round(ranking * 100)) + "%");
+		logger.info("Overall score is: " + (Math.round(ranking * 100)) + " points!");
 	}
 
 	public void reportOnStories(List<IssueValidatorEntry> entries)
