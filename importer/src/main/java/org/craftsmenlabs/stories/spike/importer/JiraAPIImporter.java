@@ -1,13 +1,9 @@
 package org.craftsmenlabs.stories.spike.importer;
 
+import java.io.*;
+import java.net.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * Importer
@@ -41,10 +37,11 @@ public class JiraAPIImporter implements Importer
 		try
 		{
 			URL url = new URL(urlResource
-				+ "/rest/api/2/search?jql=project="
-				+ httpEncode(projectKey)
-				+ "&maxResults=100000&issuetype=Story&status="
-				+ httpEncode(statusKey));
+				+ "/rest/api/2/search?jql="
+				+ "project%3D" + httpEncode(projectKey) + "+AND+"
+				+ "type%3DStory+AND+"
+				+ "status%3D\"" + httpEncode(statusKey) + "\""
+				+ "&maxResults=100000");
 			logger.info("Retrieving data form:" + url.toString());
 
 			conn = (HttpURLConnection)url.openConnection();
