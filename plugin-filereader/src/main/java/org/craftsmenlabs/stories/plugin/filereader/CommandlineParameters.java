@@ -26,4 +26,7 @@ public class CommandlineParameters {
 
     @Parameter(required = false, names = {"-authKey", "-a"}, description = "authKey for the rest authentication")
     private String authKey;
+
+    @Parameter(required = false, names = {"-outputFile"}, description = "output file")
+    private String outputFile;
 }

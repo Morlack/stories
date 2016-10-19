@@ -10,13 +10,15 @@ import org.craftsmenlabs.stories.spike.importer.JiraAPIImporter;
 import org.craftsmenlabs.stories.spike.isolator.parser.JiraCSVParser;
 import org.craftsmenlabs.stories.spike.isolator.parser.JiraJsonParser;
 import org.craftsmenlabs.stories.spike.isolator.parser.Parser;
+import org.craftsmenlabs.stories.spike.reporter.ConsoleReporter;
+import org.craftsmenlabs.stories.spike.reporter.JsonFileReporter;
 import org.craftsmenlabs.stories.spikes.StoryValidator;
 import org.craftsmenlabs.stories.spikes.ranking.CurvedRanking;
-import org.craftsmenlabs.stories.spikes.reporting.ValidateorConsoleReporter;
 import org.craftsmenlabs.stories.spikes.scoring.BacklogScorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,7 @@ public class PluginExecutor {
 
     private final Logger logger = LoggerFactory.getLogger(PluginExecutor.class);
     private StoryValidator storyValidator;
-    private ValidateorConsoleReporter validationConsoleReporter = new ValidateorConsoleReporter();
+    private ConsoleReporter validationConsoleReporter = new ConsoleReporter();
 
     String STATUS = "To Do";
 
@@ -49,11 +51,17 @@ public class PluginExecutor {
 
         BacklogValidatorEntry backlogValidatorEntry = BacklogScorer.performScorer(backlog, new CurvedRanking());
 
-        validationConsoleReporter.reportOnBacklog(backlogValidatorEntry);
 
+        //console report
+        validationConsoleReporter.report(backlogValidatorEntry);
 
+        //write file report
+        if(parameters.getOutputFile() != null && !parameters.getOutputFile().isEmpty()) {
+            new JsonFileReporter(new File(parameters.getOutputFile()))
+                    .report(backlogValidatorEntry);
+        }
         //Multiply by 100%
-        return storyValidator.rateRanking(backlogValidatorEntry.getPointsValuation() * 100);
+        return backlogValidatorEntry.getRating();
     }
 
     public Importer getImporter(CommandlineParameters parameters){

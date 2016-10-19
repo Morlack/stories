@@ -1,24 +1,18 @@
-package org.craftsmenlabs.stories.spikes.reporting;
+package org.craftsmenlabs.stories.spike.reporter;
 
 import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.validatorentry.*;
-import org.craftsmenlabs.stories.spikes.rating.RatingExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class ValidateorConsoleReporter
+public class ConsoleReporter
 {
-	private final Logger logger = LoggerFactory.getLogger(ValidateorConsoleReporter.class);
+	private final Logger logger = LoggerFactory.getLogger(ConsoleReporter.class);
 
-	public void rankingReport(float ranking)
-	{
-		logger.info("Overall score is: " + (Math.round(ranking * 100)) + "%");
-	}
-
-    public void reportOnBacklog(BacklogValidatorEntry backlogValidatorEntry){
+    public void report(BacklogValidatorEntry backlogValidatorEntry){
         //header
         logger.info("\n\n\n" + storynator + " \n\n\n");
         logger.info("------------------------------------------------------------");
@@ -30,15 +24,14 @@ public class ValidateorConsoleReporter
         entries.forEach(issue -> reportOnIssue(issue));
 
         //Summary
-        RatingExecutor ratingExecutor = new RatingExecutor();
         logger.info("\n\n\n" + storynator + " \n\n\n");
         logger.info("------------------------------------------------------------");
         logger.info("--                  Storynator report                     --");
         logger.info("------------------------------------------------------------");
 
         logger.info("Processed a total of " + entries.size() + " issues.");
-        logger.info("Total score of " + new DecimalFormat("#.##").format(backlogValidatorEntry.getPointsValuation()*100f) + "% ");
-        logger.info("Rated: " + ratingExecutor.retrieveRating(backlogValidatorEntry.getPointsValuation()));
+        logger.info("Backlog score of " + new DecimalFormat("#.##").format(backlogValidatorEntry.getPointsValuation()*100f) + "% ");
+        logger.info("Rated: " + backlogValidatorEntry.getRating());
     }
 
 
@@ -88,7 +81,8 @@ public class ValidateorConsoleReporter
                 logger.info("\t\t Violation found: " + violation.toColoredString()));
     }
 
-    String storynator = "   ,d88~/\\   d8                                                d8                   \n" +
+    String storynator =
+            "   ,d88~/\\   d8                                                d8                   \n" +
             "   8888/   _d88__  e88~-_  888-~\\ Y88b  / 888-~88e   /~~~8e  _d88__  e88~-_  888-~\\ \n" +
             "   `Y88b    888   d888   i 888     Y888/  888  888       88b  888   d888   i 888    \n" +
             "    `Y88b,  888   8888   | 888      Y8/   888  888  e88~-888  888   8888   | 888    \n" +
