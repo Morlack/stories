@@ -2,6 +2,7 @@ package org.craftsmenlabs.stories.api.models.validatorentry;
 
 import lombok.Builder;
 import lombok.Data;
+import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 
@@ -15,4 +16,5 @@ public class BacklogValidatorEntry {
 
     private float pointsValuation = 0.0f;
     private List<Violation> violations;
+    private Rating rating;
 }

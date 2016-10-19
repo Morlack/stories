@@ -22,7 +22,7 @@ public class JiraJsonParserTest {
     @Ignore("Test to be implemented")
     @Test
     public void getJiraJsonIssuesTest() {
-        File file = new File("/Users/youritjang/IdeaProjects/stories/temp/issuesfile-NEVER-SUBMIT-TO-GITHUB.json");
+        File file = new File("/Users/youritjang/IdeaProjects/stories/temp/issuesfile.json");
         try {
             String input = FileUtils.readFileToString(file, Charset.defaultCharset());
             List<JiraJsonIssue> jiraJsonIssues = jiraJsonParser.getJiraJsonIssues(input);
@@ -40,13 +40,14 @@ public class JiraJsonParserTest {
     @Ignore("Test to be implemented")
     @Test
     public void getIssuesTest() {
-        File file = new File("/Users/youritjang/IdeaProjects/stories/temp/issuesfile-NEVER-SUBMIT-TO-GITHUB.json");
+        File file = new File("/Users/youritjang/IdeaProjects/stories/temp/issuesfile.json");
         try {
             String input = FileUtils.readFileToString(file, Charset.defaultCharset());
 
             jiraJsonParser.getIssues(input)
                     .stream()
                     .sorted(Comparator.comparing(Issue::getRank))
+                    .filter(issue -> issue.getUserstory() != null && !issue.getUserstory().isEmpty())
                     .forEach(issue -> {
                         StringBuilder sb = new StringBuilder();
                         sb.append("Key= ");
@@ -58,7 +59,8 @@ public class JiraJsonParserTest {
                         sb.append("Est= ");
                         sb.append(issue.getEstimation());
                         sb.append(" ");
-
+                        sb.append("\n");
+                        sb.append(issue.getUserstory());
                         System.out.println(sb.toString());
             });
 
