@@ -1,14 +1,18 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
+import org.aeonbits.owner.ConfigFactory;
+import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.StoryViolation;
 import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.ViolationType;
 import org.craftsmenlabs.stories.api.models.validatorentry.UserStoryValidatorEntry;
+import org.craftsmenlabs.stories.spikes.configuration.ScorerConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoryScorer {
+    static ScorerConfig cfg = ConfigFactory.create(ScorerConfig.class, System.getenv());
 
     public static UserStoryValidatorEntry performScorer(String userStory) {
 
@@ -42,11 +46,15 @@ public class StoryScorer {
                 violations.add(new StoryViolation(ViolationType.StorySoClauseViolation, "<So that> section is not described properly."));
             }
         }
+
+        Rating rating = points >= cfg.storyRatingThreshold()? Rating.SUCCES : Rating.FAIL;
+
         return UserStoryValidatorEntry
                 .builder()
                 .userStory(userStory)
                 .pointsValuation(points)
                 .violations(violations)
+                .rating(rating)
                 .build();
     }
 

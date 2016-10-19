@@ -1,9 +1,12 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
+import org.aeonbits.owner.ConfigFactory;
 import org.craftsmenlabs.stories.api.models.CriteriaViolation;
+import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.ViolationType;
 import org.craftsmenlabs.stories.api.models.validatorentry.AcceptanceCriteriaValidatorEntry;
+import org.craftsmenlabs.stories.spikes.configuration.ScorerConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 public class AcceptanceCriteriaScorer {
 
     public static final int MINIMUM_LENGTH_OF_ACC_CRITERIA = 10;
+    static ScorerConfig cfg = ConfigFactory.create(ScorerConfig.class, System.getenv());
 
     public static AcceptanceCriteriaValidatorEntry performScorer(String criteria) {
 
@@ -44,6 +48,8 @@ public class AcceptanceCriteriaScorer {
 
             }
         }
+
+        Rating rating = points >= cfg.criteriaRatingThreshold()? Rating.SUCCES : Rating.FAIL;
 
         return AcceptanceCriteriaValidatorEntry
                 .builder()

@@ -5,6 +5,9 @@ import org.craftsmenlabs.stories.api.models.Rating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+
 public class App {
     private final Logger logger = LoggerFactory.getLogger(App.class);
 

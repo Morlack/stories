@@ -16,7 +16,6 @@ public class StoryValidator
 {
 
 	private final Logger logger = LoggerFactory.getLogger(StoryValidator.class);
-	private StoryScorer storyScorer = new StoryScorer();
 	private Ranking ranking = new CurvedRanking();
 
     public BacklogValidatorEntry scoreStories(List<Issue> entries)
