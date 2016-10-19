@@ -37,7 +37,7 @@ public class JiraJsonParserTest {
         }
     }
 
-//    @Ignore("Test to be implemented")
+    @Ignore("Test to be implemented")
     @Test
     public void getIssuesTest() {
         File file = new File("/Users/youritjang/IdeaProjects/stories/temp/issuesfile.json");
