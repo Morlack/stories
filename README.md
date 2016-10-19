@@ -22,7 +22,7 @@ Things we meassure:
     mvn package
 
 ## Usage
-    java -jar App.jar [PARAMETERS] 
+    java -jar stories-<version>.jar [PARAMETERS]
 
 Parameters
 * -f path to the file containing the stories (an export from Jira)
