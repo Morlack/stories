@@ -1,7 +1,5 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
-import org.aeonbits.owner.ConfigFactory;
-import org.craftsmenlabs.stories.ValidationConfig;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
@@ -21,7 +19,7 @@ public class BacklogScorer {
     public static BacklogValidatorEntry performScorer(Backlog backlog, Ranking ranking, ScorerConfigCopy validationConfig ) {
 
 
-        List<IssueValidatorEntry> issueValidatorEntries = getValidatedIssues(backlog);
+        List<IssueValidatorEntry> issueValidatorEntries = getValidatedIssues(backlog, validationConfig);
 
         BacklogValidatorEntry backlogValidatorEntry =
                 BacklogValidatorEntry.builder()
@@ -38,9 +36,9 @@ public class BacklogScorer {
         return backlogValidatorEntry;
     }
 
-    private static List<IssueValidatorEntry> getValidatedIssues(Backlog backlog) {
+    private static List<IssueValidatorEntry> getValidatedIssues(Backlog backlog, ScorerConfigCopy validationConfig) {
         return backlog.getIssues().stream()
-                .map(IssueScorer::performScorer)
+                .map(issue -> IssueScorer.performScorer(issue, validationConfig))
                 .collect(Collectors.toList());
     }
 }

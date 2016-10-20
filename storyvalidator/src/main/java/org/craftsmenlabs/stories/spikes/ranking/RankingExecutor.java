@@ -14,15 +14,15 @@ public class RankingExecutor
 
 	public RankingExecutor()
 	{
-		Configuration configuration = new Configuration();
-		if (configuration.getDesiredRankingStrategy() == null || configuration.getDesiredRankingStrategy().length() == 0)
-		{
-			//ranking = new LinearRanking();
-		}
-		else
-		{
-			ranking = chooseRankingStrategy(configuration.getDesiredRankingStrategy());
-		}
+//		Configuration configuration = new Configuration();
+//		if (configuration.getDesiredRankingStrategy() == null || configuration.getDesiredRankingStrategy().length() == 0)
+//		{
+//			//ranking = new LinearRanking();
+//		}
+//		else
+//		{
+			ranking = chooseRankingStrategy("Curved");
+//		}
 	}
 
 	public RankingExecutor(String strategy)

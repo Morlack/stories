@@ -1,19 +1,18 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
-import org.aeonbits.owner.ConfigFactory;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.StoryViolation;
 import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.ViolationType;
 import org.craftsmenlabs.stories.api.models.validatorentry.UserStoryValidatorEntry;
+import org.craftsmenlabs.stories.api.models.validatorentry.validatorconfig.ScorerConfigCopy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoryScorer {
-    static ScorerConfig cfg = ConfigFactory.create(ScorerConfig.class, System.getenv());
 
-    public static UserStoryValidatorEntry performScorer(String userStory) {
+    public static UserStoryValidatorEntry performScorer(String userStory, ScorerConfigCopy validationConfig) {
 
         List<Violation> violations = new ArrayList<>();
 
@@ -46,7 +45,7 @@ public class StoryScorer {
             }
         }
 
-        Rating rating = points >= cfg.storyRatingThreshold()? Rating.SUCCES : Rating.FAIL;
+        Rating rating = points >= validationConfig.getStory().getRatingtreshold() ? Rating.SUCCES : Rating.FAIL;
 
         return UserStoryValidatorEntry
                 .builder()

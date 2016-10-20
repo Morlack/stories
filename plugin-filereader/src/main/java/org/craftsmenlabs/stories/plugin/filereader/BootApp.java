@@ -1,6 +1,5 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
-import org.craftsmenlabs.stories.ValidationConfig;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.validatorentry.validatorconfig.ScorerConfigCopy;
 import org.slf4j.Logger;

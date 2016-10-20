@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories;
+package org.craftsmenlabs.stories.plugin.filereader;
 
 import lombok.Data;
 import org.craftsmenlabs.stories.api.models.validatorentry.validatorconfig.ScorerConfigCopy;
