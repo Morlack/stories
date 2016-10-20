@@ -1,12 +1,4 @@
-package org.craftsmenlabs.stories.spikes.ranking;
-
-import mockit.Tested;
-import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
-import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
-import org.craftsmenlabs.stories.spikes.TestDataGenerator;
-import org.junit.Test;
-
-import java.util.List;
+package org.craftsmenlabs.stories.spike.ranking;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.withinPercentage;

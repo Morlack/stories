@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories.spikes;
+package org.craftsmenlabs.stories.spike;
 
 import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;

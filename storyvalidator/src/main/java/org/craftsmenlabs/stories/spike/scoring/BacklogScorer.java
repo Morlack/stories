@@ -1,11 +1,11 @@
-package org.craftsmenlabs.stories.spikes.scoring;
+package org.craftsmenlabs.stories.spike.scoring;
 
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.validatorconfig.ScorerConfigCopy;
-import org.craftsmenlabs.stories.spikes.ranking.Ranking;
+import org.craftsmenlabs.stories.spike.ranking.Ranking;
 
 import java.util.ArrayList;
 import java.util.List;

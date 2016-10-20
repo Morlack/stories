@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories.spikes;
+package org.craftsmenlabs.stories.spike;
 
 public class StoryValidatorTest
 {

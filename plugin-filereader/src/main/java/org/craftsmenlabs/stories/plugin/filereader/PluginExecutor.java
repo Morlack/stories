@@ -13,8 +13,8 @@ import org.craftsmenlabs.stories.spike.isolator.parser.JiraJsonParser;
 import org.craftsmenlabs.stories.spike.isolator.parser.Parser;
 import org.craftsmenlabs.stories.spike.reporter.ConsoleReporter;
 import org.craftsmenlabs.stories.spike.reporter.JsonFileReporter;
-import org.craftsmenlabs.stories.spikes.ranking.CurvedRanking;
-import org.craftsmenlabs.stories.spikes.scoring.BacklogScorer;
+import org.craftsmenlabs.stories.spike.ranking.CurvedRanking;
+import org.craftsmenlabs.stories.spike.scoring.BacklogScorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

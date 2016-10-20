@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories.spikes.scoring;
+package org.craftsmenlabs.stories.spike.scoring;
 
 import mockit.Expectations;
 import mockit.Injectable;

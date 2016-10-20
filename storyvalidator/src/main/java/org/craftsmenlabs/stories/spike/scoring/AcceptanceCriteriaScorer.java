@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories.spikes.scoring;
+package org.craftsmenlabs.stories.spike.scoring;
 
 import org.craftsmenlabs.stories.api.models.CriteriaViolation;
 import org.craftsmenlabs.stories.api.models.Rating;

@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories.spikes.testutil;
+package org.craftsmenlabs.stories.spike.testutil;
 
 import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 

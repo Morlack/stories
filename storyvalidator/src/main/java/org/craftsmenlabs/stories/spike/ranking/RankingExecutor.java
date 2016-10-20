@@ -1,4 +1,4 @@
-package org.craftsmenlabs.stories.spikes.ranking;
+package org.craftsmenlabs.stories.spike.ranking;
 
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
