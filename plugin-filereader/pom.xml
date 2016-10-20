@@ -1,10 +1,17 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--<parent>-->
+        <!--<artifactId>stories</artifactId>-->
+        <!--<groupId>org.craftsmenlabs.stories.spikes</groupId>-->
+        <!--<version>1.0-SNAPSHOT</version>-->
+    <!--</parent>-->
     <parent>
-        <artifactId>stories</artifactId>
-        <groupId>org.craftsmenlabs.stories.spikes</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.1.RELEASE</version>
     </parent>
+
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>plugin-filereader</artifactId>
@@ -12,6 +19,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
         <!--internal components -->
         <dependency>
             <groupId>org.craftsmenlabs.stories.spikes</groupId>
@@ -39,10 +51,10 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.beust</groupId>
-            <artifactId>jcommander</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.beust</groupId>-->
+            <!--<artifactId>jcommander</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -61,12 +73,12 @@
         </dependency>
 
         <!-- test dependencies -->
-        <dependency>
-            <groupId>org.jmockit</groupId>
-            <artifactId>jmockit</artifactId>
-            <version>${jmockit.verion}</version>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jmockit</groupId>-->
+            <!--<artifactId>jmockit</artifactId>-->
+            <!--&lt;!&ndash;<version>${jmockit.verion}</version>&ndash;&gt;-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -84,6 +96,17 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

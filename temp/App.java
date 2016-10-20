@@ -1,12 +1,10 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
 import com.beust.jcommander.JCommander;
+import org.aeonbits.owner.ConfigFactory;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.net.URL;
-import java.net.URLClassLoader;
 
 public class App {
     private final Logger logger = LoggerFactory.getLogger(App.class);
@@ -18,12 +16,11 @@ public class App {
 
     public void startApplication(String[] args) {
         logger.info("Starting stories plugin.");
-        CommandlineParameters parameters = new CommandlineParameters();
-        new JCommander(parameters, args);
-        print(parameters);
+
+        ApplicationConfig cfg = getApplicationConfig(args);
 
         PluginExecutor pluginExecutor = new PluginExecutor();
-        Rating rating = pluginExecutor.execute(parameters);
+        Rating rating = pluginExecutor.execute(cfg);
         if (rating == Rating.SUCCES)
         {
             System.exit(0);
@@ -34,6 +31,20 @@ public class App {
         }
 
         logger.info("Finished stories plugin.");
+    }
+
+    private ApplicationConfig getApplicationConfig(String[] args) {
+        ApplicationConfig cfg;
+        if (args.length > 0) {
+//            Properties props = new Properties();
+//            for (int i = 0; i <args.length/2; i++) {
+//                props.setProperty(args[i], args[i+1]);
+//            }
+            cfg = ConfigFactory.create(ApplicationConfig.class, System.getProperties());
+        } else {
+            cfg = ConfigFactory.create(ApplicationConfig.class);
+        }
+        return cfg;
     }
 
     public void print(CommandlineParameters commandlineParameters) {

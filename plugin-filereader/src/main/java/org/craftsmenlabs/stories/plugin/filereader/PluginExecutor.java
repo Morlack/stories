@@ -1,5 +1,6 @@
 package org.craftsmenlabs.stories.plugin.filereader;
 
+import org.craftsmenlabs.stories.ValidationConfig;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
@@ -12,7 +13,6 @@ import org.craftsmenlabs.stories.spike.isolator.parser.JiraJsonParser;
 import org.craftsmenlabs.stories.spike.isolator.parser.Parser;
 import org.craftsmenlabs.stories.spike.reporter.ConsoleReporter;
 import org.craftsmenlabs.stories.spike.reporter.JsonFileReporter;
-import org.craftsmenlabs.stories.spikes.StoryValidator;
 import org.craftsmenlabs.stories.spikes.ranking.CurvedRanking;
 import org.craftsmenlabs.stories.spikes.scoring.BacklogScorer;
 import org.slf4j.Logger;
@@ -25,19 +25,14 @@ import java.util.stream.Collectors;
 public class PluginExecutor {
 
     private final Logger logger = LoggerFactory.getLogger(PluginExecutor.class);
-    private StoryValidator storyValidator;
     private ConsoleReporter validationConsoleReporter = new ConsoleReporter();
 
     String STATUS = "To Do";
 
-    public PluginExecutor() {
-        storyValidator = new StoryValidator();
-    }
-
-    public Rating execute(CommandlineParameters parameters) {
-        Importer importer = getImporter(parameters);
+    public Rating execute(ApplicationConfig cfg, ValidationConfig validationConfig) {
+        Importer importer = getImporter(cfg);
         String data = importer.getDataAsString();
-        Parser parser = getParser(parameters.getDataFromat());
+        Parser parser = getParser(cfg.getDataformat());
 
         List<Issue> issues =
                 parser.getIssues(data)
@@ -49,37 +44,39 @@ public class PluginExecutor {
         Backlog backlog = new Backlog();
         backlog.setIssues(issues);
 
-        BacklogValidatorEntry backlogValidatorEntry = BacklogScorer.performScorer(backlog, new CurvedRanking());
+        //TODO validateconfig causes a cyclic dependency here!!
+        BacklogValidatorEntry backlogValidatorEntry = BacklogScorer.performScorer(backlog, new CurvedRanking(), validationConfig);
 
 
         //console report
         validationConsoleReporter.report(backlogValidatorEntry);
 
         //write file report
-        if(parameters.getOutputFile() != null && !parameters.getOutputFile().isEmpty()) {
-            new JsonFileReporter(new File(parameters.getOutputFile()))
+        if(cfg.getOutputfile() != null && !cfg.getOutputfile().isEmpty()) {
+            new JsonFileReporter(new File(cfg.getOutputfile()))
                     .report(backlogValidatorEntry);
         }
+
         //Multiply by 100%
         return backlogValidatorEntry.getRating();
     }
 
-    public Importer getImporter(CommandlineParameters parameters){
-        if(restApiParametersAreSet(parameters)){
+    public Importer getImporter(ApplicationConfig cfg){
+        if(restApiParametersAreSet(cfg)){
             logger.info("rest Api parameters are set, using JiraAPIImporter");
-            return new JiraAPIImporter(parameters.getUrl(), parameters.getProjectKey(), parameters.getAuthKey(), STATUS);
+            return new JiraAPIImporter(cfg.getUrl(), cfg.getProjectkey(), cfg.getAuthkey(), STATUS);
         }else{
-            logger.info("No rest Api parameters are set, using FileImporter on file: " + parameters.getStoryFilePath());
-            return new FileImporter(parameters.getStoryFilePath());
+            logger.info("No rest Api parameters are set, using FileImporter on file: " + cfg.getInputfile());
+            return new FileImporter(cfg.getInputfile());
         }
     }
 
 
-    private boolean restApiParametersAreSet(CommandlineParameters parameters) {
-        return parameters.getUrl() != null &&
-                !parameters.getUrl().isEmpty() &&
-                parameters.getAuthKey() != null &&
-                !parameters.getAuthKey().isEmpty();
+    private boolean restApiParametersAreSet(ApplicationConfig cfg) {
+        return cfg.getUrl() != null &&
+                !cfg.getUrl().isEmpty() &&
+                cfg.getAuthkey() != null &&
+                !cfg.getAuthkey().isEmpty();
     }
 
 

@@ -1,6 +1,7 @@
 package org.craftsmenlabs.stories.spikes.scoring;
 
 import org.aeonbits.owner.ConfigFactory;
+import org.craftsmenlabs.stories.ValidationConfig;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
@@ -16,9 +17,9 @@ import java.util.stream.Collectors;
 
 public class BacklogScorer {
 
-    static ScorerConfig cfg = ConfigFactory.create(ScorerConfig.class, System.getenv());
+    //static ScorerConfig cfg = ConfigFactory.create(ScorerConfig.class, System.getenv());
 
-    public static BacklogValidatorEntry performScorer(Backlog backlog, Ranking ranking) {
+    public static BacklogValidatorEntry performScorer(Backlog backlog, Ranking ranking, ValidationConfig validationConfig ) {
 
 
         List<IssueValidatorEntry> issueValidatorEntries = getValidatedIssues(backlog);
@@ -33,7 +34,7 @@ public class BacklogScorer {
         Float points = ranking.createRanking(backlogValidatorEntry);
         backlogValidatorEntry.setPointsValuation(points);
 
-        backlogValidatorEntry.setRating(points * 100f >= cfg.backlogRatingThreshold() ? Rating.SUCCES : Rating.FAIL);
+        backlogValidatorEntry.setRating(points * 100f >= validationConfig.getBacklog().getRatingtreshold() ? Rating.SUCCES : Rating.FAIL);
 
         return backlogValidatorEntry;
     }
