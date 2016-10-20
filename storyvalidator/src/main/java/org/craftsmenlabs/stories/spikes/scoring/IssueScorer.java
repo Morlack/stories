@@ -7,7 +7,6 @@ import org.craftsmenlabs.stories.api.models.validatorentry.AcceptanceCriteriaVal
 import org.craftsmenlabs.stories.api.models.validatorentry.EstimationValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.UserStoryValidatorEntry;
-import org.craftsmenlabs.stories.spikes.configuration.ScorerConfig;
 
 import java.util.ArrayList;
 

@@ -6,8 +6,7 @@ import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
-import org.craftsmenlabs.stories.spikes.configuration.Configuration;
-import org.craftsmenlabs.stories.spikes.configuration.ScorerConfig;
+import org.craftsmenlabs.stories.api.models.validatorentry.validatorconfig.ScorerConfigCopy;
 import org.craftsmenlabs.stories.spikes.ranking.Ranking;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class BacklogScorer {
 
     //static ScorerConfig cfg = ConfigFactory.create(ScorerConfig.class, System.getenv());
 
-    public static BacklogValidatorEntry performScorer(Backlog backlog, Ranking ranking, ValidationConfig validationConfig ) {
+    public static BacklogValidatorEntry performScorer(Backlog backlog, Ranking ranking, ScorerConfigCopy validationConfig ) {
 
 
         List<IssueValidatorEntry> issueValidatorEntries = getValidatedIssues(backlog);

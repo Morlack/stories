@@ -22,19 +22,6 @@
 
 		<!--deps-->
 		<dependency>
-			<groupId>io.github.benas</groupId>
-			<artifactId>easy-properties</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.aeonbits.owner/owner -->
-		<dependency>
-			<groupId>org.aeonbits.owner</groupId>
-			<artifactId>owner</artifactId>
-		</dependency>
-
-
-
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
@@ -65,11 +52,6 @@
 			<artifactId>assertj-core</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>plugin-filereader</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>plugin-filereader</artifactId>

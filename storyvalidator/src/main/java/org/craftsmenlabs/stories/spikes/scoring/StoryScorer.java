@@ -6,7 +6,6 @@ import org.craftsmenlabs.stories.api.models.StoryViolation;
 import org.craftsmenlabs.stories.api.models.Violation;
 import org.craftsmenlabs.stories.api.models.ViolationType;
 import org.craftsmenlabs.stories.api.models.validatorentry.UserStoryValidatorEntry;
-import org.craftsmenlabs.stories.spikes.configuration.ScorerConfig;
 
 import java.util.ArrayList;
 import java.util.List;

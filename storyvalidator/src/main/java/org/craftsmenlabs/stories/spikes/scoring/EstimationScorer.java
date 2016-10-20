@@ -3,7 +3,6 @@ package org.craftsmenlabs.stories.spikes.scoring;
 import org.aeonbits.owner.ConfigFactory;
 import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.validatorentry.EstimationValidatorEntry;
-import org.craftsmenlabs.stories.spikes.configuration.ScorerConfig;
 
 import java.util.ArrayList;
 

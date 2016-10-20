@@ -2,7 +2,6 @@ package org.craftsmenlabs.stories.spikes.ranking;
 
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
 import org.craftsmenlabs.stories.api.models.validatorentry.IssueValidatorEntry;
-import org.craftsmenlabs.stories.spikes.configuration.Configuration;
 
 import java.util.List;
 

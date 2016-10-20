@@ -5,6 +5,7 @@ import org.craftsmenlabs.stories.api.models.Rating;
 import org.craftsmenlabs.stories.api.models.scrumitems.Backlog;
 import org.craftsmenlabs.stories.api.models.scrumitems.Issue;
 import org.craftsmenlabs.stories.api.models.validatorentry.BacklogValidatorEntry;
+import org.craftsmenlabs.stories.api.models.validatorentry.validatorconfig.ScorerConfigCopy;
 import org.craftsmenlabs.stories.spike.importer.FileImporter;
 import org.craftsmenlabs.stories.spike.importer.Importer;
 import org.craftsmenlabs.stories.spike.importer.JiraAPIImporter;
@@ -29,7 +30,7 @@ public class PluginExecutor {
 
     String STATUS = "To Do";
 
-    public Rating execute(ApplicationConfig cfg, ValidationConfig validationConfig) {
+    public Rating execute(ApplicationConfig cfg, ScorerConfigCopy validationConfig) {
         Importer importer = getImporter(cfg);
         String data = importer.getDataAsString();
         Parser parser = getParser(cfg.getDataformat());
