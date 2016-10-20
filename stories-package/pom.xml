@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.craftsmenlabs.stories.spikes</groupId>
+    <groupId>org.craftsmenlabs.stories</groupId>
     <artifactId>stories-package</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -14,47 +14,39 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.craftsmenlabs.stories.spikes</groupId>
-            <artifactId>importer</artifactId>
+            <groupId>org.craftsmenlabs.stories</groupId>
+            <artifactId>stories-importer</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.craftsmenlabs.stories.spikes</groupId>
-            <artifactId>isolator</artifactId>
+            <groupId>org.craftsmenlabs.stories</groupId>
+            <artifactId>stories-isolator</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.craftsmenlabs.stories.spikes</groupId>
-            <artifactId>plugin-filereader</artifactId>
+            <groupId>org.craftsmenlabs.stories</groupId>
+            <artifactId>stories-launcher</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.craftsmenlabs.stories.spikes</groupId>
-            <artifactId>reporter</artifactId>
+            <groupId>org.craftsmenlabs.stories</groupId>
+            <artifactId>stories-reporter</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.craftsmenlabs.stories.spikes</groupId>
+            <groupId>org.craftsmenlabs.stories</groupId>
             <artifactId>stories-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.craftsmenlabs.stories.spikes</groupId>
-            <artifactId>storyvalidator</artifactId>
+            <groupId>org.craftsmenlabs.stories</groupId>
+            <artifactId>stories-storyvalidator</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -75,6 +67,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
